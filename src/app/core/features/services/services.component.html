@@ -1,0 +1,27 @@
+<section id="services" class="services-section">
+  <div class="services-container">
+    <h2 class="services-title" data-aos="fade-up" data-aos-delay="100">
+      OUR SERVICES
+    </h2>
+
+    <div class="services-grid">
+      <div 
+        *ngFor="let service of services; let i = index"
+        class="service-card"
+        [attr.data-index]="i"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="100 + (i * 100)"
+        data-aos-duration="800"
+        data-aos-easing="ease-out-cubic"
+      >
+        <div class="service-icon-wrapper">
+          <i class="service-icon" [ngClass]="service.icon"></i>
+        </div>
+
+        <h3 class="service-title">{{ service.title }}</h3>
+        <p class="service-description">{{ service.description }}</p>
+      </div>
+    </div>
+
+  </div>
+</section>
