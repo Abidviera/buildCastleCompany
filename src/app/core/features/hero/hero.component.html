@@ -1,0 +1,134 @@
+<section id="home" class="hero-section" #heroSection>
+  <!-- Floating Geometric Shapes -->
+  <div class="floating-shapes">
+    <div 
+      class="shape shape-square"
+      [style.transform]="'translate(' + (mousePosition.x * 30) + 'px, ' + (mousePosition.y * 30) + 'px)'">
+    </div>
+    <div 
+      class="shape shape-circle"
+      [style.transform]="'translate(' + (mousePosition.x * -40) + 'px, ' + (mousePosition.y * -40) + 'px)'">
+    </div>
+  </div>
+
+  <!-- Hero Content Container -->
+  <div class="hero-container">
+    <!-- Background Images with Parallax -->
+    <div class="background-images">
+      <div 
+        *ngFor="let slide of heroSlides; let i = index"
+        class="background-slide"
+        [class.active]="i === currentSlide"
+        [class.exit]="i === previousSlide"
+        [style.transform]="'translateY(' + parallaxY + 'px)'">
+        <div 
+          class="bg-image"
+          [style.background-image]="'url(' + slide.image + ')'">
+        </div>
+        <div class="bg-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="content-wrapper">
+      <div class="content-grid">
+        <!-- Left Side - Text Content -->
+        <div class="text-content">
+          <!-- Slide Counter -->
+          <div class="slide-counter" >
+            <span class="counter-current">0{{ currentSlide + 1 }}</span>
+            <div class="counter-progress">
+              <div 
+                class="progress-fill"
+                [style.width]="progressWidth + '%'">
+              </div>
+            </div>
+            <span class="counter-total">0{{ heroSlides.length }}</span>
+          </div>
+
+          <!-- Title with Animated Text -->
+          <div class="title-container">
+            <h1 class="hero-title" >
+              <span 
+                *ngFor="let word of getCurrentWords(); let i = index"
+                class="title-word"
+                [class.accent]="isAccentWord(word)"
+                [style.animation-delay]="(i * 0.1) + 's'">
+                {{ word }}
+              </span>
+            </h1>
+
+            <p class="hero-subtitle" >
+              {{ heroSlides[currentSlide].subtitle }}
+            </p>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="button-group" >
+            <button 
+              class="btn btn-primary"
+              (click)="scrollToSection('contact')">
+              <span class="btn-text">GET IN TOUCH</span>
+              <span class="btn-text-hover">GET IN TOUCH</span>
+              <div class="btn-overlay"></div>
+            </button>
+
+            <button 
+              class="btn btn-secondary"
+              (click)="scrollToSection('services')">
+              EXPLORE SERVICES
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side - Slide Navigation -->
+        <div class="slide-navigation">
+          <div class="nav-slides">
+            <button
+              *ngFor="let slide of heroSlides; let i = index"
+              class="nav-slide-item"
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)"
+              [style.height]="i === currentSlide ? '192px' : '96px'">
+              <div 
+                class="nav-slide-bg"
+                [style.background-image]="'url(' + slide.image + ')'">
+              </div>
+              <div class="nav-slide-overlay"></div>
+              <div class="nav-slide-content">
+                <div class="nav-slide-number">0{{ i + 1 }}</div>
+                <div class="nav-slide-title" *ngIf="i === currentSlide">
+                  {{ getTitlePreview(slide.title) }}
+                </div>
+              </div>
+              <div 
+                class="nav-slide-progress"
+                *ngIf="i === currentSlide">
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <span class="scroll-text">SCROLL</span>
+      <svg class="scroll-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-container">
+      <div class="stats-grid">
+        <div class="stat-item" *ngFor="let stat of statsData; let i = index">
+          <div class="stat-value">{{ stat.value }}+</div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
