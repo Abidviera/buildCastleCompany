@@ -5,7 +5,7 @@
     </h2>
 
     <div class="services-grid">
-      <div 
+      <div
         *ngFor="let service of services; let i = index"
         class="service-card"
         [attr.data-index]="i"
@@ -21,6 +21,5 @@
         <p class="service-description">{{ service.description }}</p>
       </div>
     </div>
-
   </div>
 </section>

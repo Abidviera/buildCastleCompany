@@ -1,5 +1,10 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';import { AosService } from '../../../services/aos.service';
+import {
+  Component,
+  HostListener,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 interface Service {
   icon: string; 
@@ -13,6 +18,7 @@ interface Service {
   styleUrl: './services.component.scss'
 })
 export class ServicesComponent {
+ 
   services: Service[] = [
     {
       icon: 'bi-clipboard-check',
@@ -46,35 +52,33 @@ export class ServicesComponent {
     }
   ];
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private aosService: AosService
-  ) {}
 
-  ngOnInit(): void {
-    // AOS is already initialized globally
-    // Just refresh to ensure new content is detected
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.aosService.refresh();
-      }, 300);
+   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+   ngOnInit(): void {
+   
+   if (isPlatformBrowser(this.platformId)) {
+      import('aos').then(aos => {
+        aos.default.init({
+          duration: 600,
+          easing: 'ease-out-cubic',
+          once: true,
+          offset: 50,
+          delay: 0,
+          disable: false,
+          anchorPlacement: 'top-bottom',
+          mirror: false,
+          throttleDelay: 99,
+          debounceDelay: 50,
+        });
+      });
     }
+    // this.handleScroll();
   }
 
-  getAnimationDelay(index: number): number {
-    return this.aosService.getOptimizedDelay(100, index);
+  ngOnDestroy(): void {
+
+  
   }
 
-  getAnimationType(index: number): string {
-    if (!isPlatformBrowser(this.platformId)) return 'fade-up';
-    
-    const width = window.innerWidth;
-    
-    if (width < 768) {
-      return 'fade-up';
-    }
-    
-    const animations = ['fade-up', 'zoom-in'];
-    return animations[index % animations.length];
-  }
+  
 }
