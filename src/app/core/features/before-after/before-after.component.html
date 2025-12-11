@@ -1,1 +1,134 @@
-<p>before-after works!</p>
+<section class="before-after-section">
+  <div class="container">
+    <div class="section-header" 
+         data-aos="fade-up"
+         data-aos-duration="600"
+         data-aos-delay="0">
+      <h2 class="section-title">
+        TRANSFORMATION<br />STORIES
+      </h2>
+      <p class="section-description">
+        See how we transform ordinary spaces into extraordinary homes. 
+        Slide to compare before and after results of our projects.
+      </p>
+    </div>
+
+    <div class="projects-list">
+      <div class="project-card" 
+           *ngFor="let project of projects; let index = index"
+           data-aos="fade-up"
+           [attr.data-aos-delay]="index * 100"
+           data-aos-duration="700">
+        <div class="project-content">
+          <div class="grid-container">
+            <div class="project-info">
+              <div class="location-badge">
+                {{ project.location }}
+              </div>
+              <h3 class="project-title">{{ project.title }}</h3>
+              <p class="project-description">
+                {{ project.description }}
+              </p>
+              
+              <div class="comparison-labels">
+                <div class="comparison-item" data-aos="fade-right" data-aos-delay="300">
+                  <div class="comparison-title">Before</div>
+                  <p class="comparison-subtitle">Outdated & worn</p>
+                </div>
+                <div class="comparison-item" data-aos="fade-left" data-aos-delay="400">
+                  <div class="comparison-title">After</div>
+                  <p class="comparison-subtitle">Modern & elegant</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Before/After Slider -->
+            <div class="before-after-slider"
+                 data-aos="zoom-in"
+                 data-aos-delay="200">
+              <div class="slider-container">
+                <!-- After Image (Background) -->
+                <div class="image-after">
+                  <img 
+                    [src]="project.after" 
+                    [alt]="project.title + ' - After'"
+                    class="slider-image"
+                    (error)="handleImageError($event)"
+                    data-aos="fade-in"
+                    data-aos-delay="500"
+                  />
+                </div>
+
+                <!-- Before Image (Foreground with clip) -->
+                <div 
+                  class="image-before"
+                  [style.clip-path]="getClipPath(index)"
+                >
+                  <img 
+                    [src]="project.before" 
+                    [alt]="project.title + ' - Before'"
+                    class="slider-image"
+                    (error)="handleImageError($event)"
+                    data-aos="fade-in"
+                    data-aos-delay="400"
+                  />
+                </div>
+
+                <!-- Slider Line -->
+                <div 
+                  class="slider-line"
+                  [style.left]="getSliderPosition(index)"
+                  data-aos="fade-in"
+                  data-aos-delay="600"
+                >
+                  <div class="slider-handle">
+                    <div class="handle-icon">
+                      <div class="handle-line"></div>
+                      <div class="handle-line"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slider Control -->
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  [value]="activeSliders[index]"
+                  (input)="handleSliderChange(index, $event)"
+                  class="slider-control"
+                />
+
+                <!-- Labels -->
+                <div class="slider-label before-label"
+                     data-aos="fade-right"
+                     data-aos-delay="700">
+                  BEFORE
+                </div>
+                <div class="slider-label after-label"
+                     data-aos="fade-left"
+                     data-aos-delay="700">
+                  AFTER
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-container"
+         data-aos="fade-up"
+         data-aos-delay="300"
+         data-aos-anchor-placement="top-bottom">
+      <a
+        href="#contact"
+        class="cta-button"
+        data-aos="zoom-in"
+        data-aos-delay="400"
+      >
+        Start Your Transformation
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,1 +1,120 @@
-<p>team-showcase works!</p>
+<section class="team-showcase">
+  <!-- Background Pattern -->
+  <div class="background-pattern" ></div>
+
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-aos="fade-up">
+      <div class="header-decoration">
+        <div class="decoration-line"></div>
+        <div class="decoration-text">OUR STRENGTH</div>
+        <div class="decoration-line"></div>
+      </div>
+      <h2 class="section-title">
+        THE BUILD CASTLE<sup>®</sup> TEAM
+      </h2>
+      <p class="section-description">
+        Meet the skilled professionals who transform your construction dreams into reality
+      </p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation" data-aos="fade-up" data-aos-delay="100">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'team'"
+        (click)="setTab('team')">
+        OUR TEAM
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'expertise'"
+        (click)="setTab('expertise')">
+        OUR EXPERTISE
+      </button>
+    </div>
+
+    <!-- Team Members Grid -->
+    <div *ngIf="activeTab === 'team'" class="team-grid">
+      <div 
+        *ngFor="let member of teamMembers; let i = index" 
+        class="team-card"
+        [attr.data-aos]="'fade-up'"
+        [attr.data-aos-delay]="i * 100">
+        <div class="card-image-container">
+          <img 
+            [src]="member.image" 
+            [alt]="member.name"
+            class="card-image"
+            (error)="onImageError($event)">
+          <div class="image-overlay"></div>
+        </div>
+        
+        <div class="card-hover-content">
+          <h3 class="member-name">{{member.name}}</h3>
+          <p class="member-role">{{member.role}}</p>
+          <p class="member-description">{{member.description}}</p>
+        </div>
+
+        <div class="card-content">
+          <h3 class="member-name">{{member.name}}</h3>
+          <p class="member-role">{{member.role}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expertise Grid -->
+    <div *ngIf="activeTab === 'expertise'" class="expertise-grid">
+      <div 
+        *ngFor="let item of expertise; let i = index" 
+        class="expertise-card"
+        [attr.data-aos]="'fade-up'"
+        [attr.data-aos-delay]="i * 100">
+        <div class="expertise-icon">
+          <div class="icon-container">
+            <i [class]="getBootstrapIconClass(item.icon)"></i>
+          </div>
+        </div>
+        <div class="expertise-content">
+          <h3 class="expertise-title">{{item.title}}</h3>
+          <p class="expertise-description">{{item.description}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Bar -->
+    <div class="achievements-bar" data-aos="fade-up" data-aos-delay="200">
+      <div class="achievements-grid">
+        <div 
+          *ngFor="let achievement of achievements; let i = index" 
+          class="achievement-item"
+          [attr.data-aos]="'fade-up'"
+          [attr.data-aos-delay]="i * 100">
+          <div class="achievement-icon-container">
+            <div 
+              class="achievement-icon"
+              [style.background]="'linear-gradient(135deg, ' + achievement.color + '40, ' + achievement.color + '20)'">
+              <div class="icon-wrapper">
+                <i [class]="getBootstrapIconClassForAchievements(achievement.icon)"></i>
+              </div>
+            </div>
+          </div>
+          <div class="achievement-number">{{achievement.number}}</div>
+          <div class="achievement-label">{{achievement.label}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta-section" data-aos="fade-up" data-aos-delay="300">
+      <h3 class="cta-title">Ready to Work With the Best?</h3>
+      <p class="cta-description">
+        Join hundreds of satisfied clients who trusted BUILD CASTLE® with their dream projects
+      </p>
+      <button class="cta-button" (click)="scrollToContact()">
+        <span>START YOUR PROJECT TODAY</span>
+        <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
