@@ -1,0 +1,42 @@
+<section class="process-section">
+  <div class="container">
+    <h2 class="section-title" 
+        data-aos="fade-up"
+        data-aos-duration="800"
+        data-aos-delay="100">
+      HOW WE WORK
+    </h2>
+
+    <div class="steps-grid">
+      <div *ngFor="let step of steps; let i = index" 
+           class="step-card"
+           [attr.data-step]="step.number"
+           data-aos="fade-up"
+           [attr.data-aos-delay]="i * 100" 
+           data-aos-duration="800"
+           data-aos-easing="ease-out-cubic"
+           data-aos-anchor-placement="top-bottom">
+        <div class="icon-container">
+          <i [ngClass]="getBootstrapIcon(step.icon)" 
+             class="step-icon"
+             data-aos="zoom-in"
+             [attr.data-aos-delay]="(i * 100) + 200"></i>
+        </div>
+        
+        <div class="step-number"
+             data-aos="zoom-in"
+             [attr.data-aos-delay]="(i * 100) + 250">{{ step.number }}</div>
+        
+        <h3 class="step-title"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="(i * 100) + 300">{{ step.title }}</h3>
+        
+        <p class="step-description"
+           data-aos="fade-up"
+           [attr.data-aos-delay]="(i * 100) + 350">
+          {{ step.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

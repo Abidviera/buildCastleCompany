@@ -10,6 +10,7 @@ import { HeaderComponent } from './features/header/header.component';
 import { ServicesdetailedComponent } from './features/servicesdetailed/servicesdetailed.component';
 import { AboutComponent } from './features/about/about.component';
 import { ProjectsCarouselComponent } from './features/projects-carousel/projects-carousel.component';
+import { ProcessComponent } from './features/process/process.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ProjectsCarouselComponent } from './features/projects-carousel/projects
     HeaderComponent,
     ServicesdetailedComponent,
     AboutComponent,
-    ProjectsCarouselComponent
+    ProjectsCarouselComponent,
+    ProcessComponent
   ],
   imports: [
     CommonModule,
