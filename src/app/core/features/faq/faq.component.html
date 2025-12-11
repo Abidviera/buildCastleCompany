@@ -1,1 +1,63 @@
-<p>faq works!</p>
+<section class="faq-section">
+  <div class="faq-container">
+    <div class="faq-header" data-aos="fade-up" data-aos-delay="100">
+      <h2 class="faq-title">FREQUENTLY ASKED<br />QUESTIONS</h2>
+      <p class="faq-subtitle">
+        Find answers to common questions about our services, process, and policies. 
+        Can't find what you're looking for? Contact us directly!
+      </p>
+    </div>
+
+    <div class="faq-content">
+      <div *ngFor="let category of faqs; let catIndex = index" 
+           class="faq-category"
+           data-aos="fade-up"
+           [attr.data-aos-delay]="(catIndex * 100) + 200">
+        <h3 class="category-title">{{ category.category }}</h3>
+        
+        <div class="faq-items">
+          <div *ngFor="let faq of category.questions; let qIndex = index" 
+               class="faq-item" 
+               [class.open]="isOpen(catIndex + '-' + qIndex)"
+               data-aos="fade-up"
+               [attr.data-aos-delay]="(catIndex * 100) + (qIndex * 50) + 250">
+            <button 
+              class="faq-question" 
+              (click)="toggleFAQ(catIndex + '-' + qIndex)"
+              [attr.aria-expanded]="isOpen(catIndex + '-' + qIndex)">
+              <span class="question-text">{{ faq.q }}</span>
+              <span class="faq-toggle">
+                <svg *ngIf="!isOpen(catIndex + '-' + qIndex)" class="plus-icon" viewBox="0 0 24 24" width="18" height="18">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                </svg>
+                <svg *ngIf="isOpen(catIndex + '-' + qIndex)" class="minus-icon" viewBox="0 0 24 24" width="18" height="18">
+                  <path d="M19 13H5v-2h14v2z" fill="currentColor"/>
+                </svg>
+              </span>
+            </button>
+            
+            <div class="faq-answer" [class.open]="isOpen(catIndex + '-' + qIndex)">
+              <div class="answer-content">
+                {{ faq.a }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-footer" data-aos="fade-up" data-aos-delay="600">
+      <h4 class="footer-title">Still Have Questions?</h4>
+      <p class="footer-text">
+        We're here to help! Reach out to us for any clarifications or specific queries
+      </p>
+      <a 
+        href="#contact" 
+        class="contact-button"
+        data-aos="zoom-in"
+        data-aos-delay="700">
+        Contact Us Now
+      </a>
+    </div>
+  </div>
+</section>

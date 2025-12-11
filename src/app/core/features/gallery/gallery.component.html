@@ -1,1 +1,42 @@
-<p>gallery works!</p>
+<section class="gallery-section">
+  <div class="gallery-container">
+    <h2 
+      class="gallery-title"
+      data-aos="fade-up"
+      data-aos-delay="50"
+    >
+      GALLERY OF<br />
+      COMPLETED WORKS
+    </h2>
+
+    <div class="gallery-grid">
+      <div 
+        *ngFor="let image of galleryImages; trackBy: trackByIndex; let i = index"
+        class="gallery-item"
+        (click)="openImage(image)"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="i * 100"
+        data-aos-duration="600"
+      >
+        <div *ngIf="image.error" class="image-fallback gallery-image">
+          <div class="image-fallback-content">
+            <img 
+              [src]="errorImageSrc" 
+              [alt]="getImageAlt(image)"
+              [attr.data-original-url]="image.src"
+              class="error-image"
+            />
+          </div>
+        </div>
+        
+        <img 
+          *ngIf="!image.error"
+          [src]="image.src"
+          [alt]="image.alt"
+          class="gallery-image"
+          (error)="onImageError(image)"
+        />
+      </div>
+    </div>
+  </div>
+</section>

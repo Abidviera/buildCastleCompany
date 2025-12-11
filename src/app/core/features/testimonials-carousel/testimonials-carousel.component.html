@@ -1,1 +1,81 @@
-<p>testimonials-carousel works!</p>
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header" 
+         data-aos="fade-up"
+         data-aos-duration="600"
+         data-aos-delay="100"
+         data-aos-easing="ease-out-cubic">
+      <h2 class="section-title">CLIENT TESTIMONIALS</h2>
+      <p class="section-subtitle">Hear what our clients say about working with us</p>
+    </div>
+
+    <div class="testimonial-card" 
+         data-aos="fade-up"
+         data-aos-duration="700"
+         data-aos-delay="200"
+         data-aos-easing="ease-out-cubic">
+      
+      <!-- Quote Icon -->
+      <div class="quote-icon"
+           data-aos="fade-up"
+           data-aos-duration="800"
+           data-aos-delay="300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
+          <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
+        </svg>
+      </div>
+
+      <!-- Stars -->
+      <div class="stars-container"
+           data-aos="fade-up"
+           data-aos-duration="900"
+           data-aos-delay="400">
+        <div *ngFor="let star of getStarsArray(testimonials[currentIndex].rating)" class="star">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Testimonial Content -->
+      <div class="testimonial-content"
+           data-aos="fade-up"
+           data-aos-duration="1000"
+           data-aos-delay="500">
+        <p class="testimonial-text">"{{ testimonials[currentIndex].text }}"</p>
+        
+        <div class="client-info"
+             data-aos="fade-up"
+             data-aos-duration="1100"
+             data-aos-delay="600">
+          <h4 class="client-name">{{ testimonials[currentIndex].name }}</h4>
+          <p class="client-location">{{ testimonials[currentIndex].location }}</p>
+          <p class="client-project">{{ testimonials[currentIndex].project }}</p>
+        </div>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="navigation-dots"
+           data-aos="fade-up"
+           data-aos-duration="1200"
+           data-aos-delay="700">
+        <button 
+          *ngFor="let testimonial of testimonials; let i = index"
+          class="dot"
+          [class.active]="i === currentIndex"
+          (click)="goToSlide(i)"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Client Count -->
+    <div class="client-count"
+         data-aos="fade-up"
+         data-aos-duration="1300"
+         data-aos-delay="800">
+      <div class="count-number">200+</div>
+      <p class="count-label">Happy Clients & Counting</p>
+    </div>
+  </div>
+</section>

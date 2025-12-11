@@ -1,0 +1,173 @@
+.testimonials-section {
+  background-color: #1a1a1a;
+  padding: 96px 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .testimonials-section {
+    padding: 100px 0;
+  }
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-title {
+  color: #ffffff;
+  margin-bottom: 24px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-size: 2.75rem;
+  font-weight: 300;
+}
+
+.section-subtitle {
+  color: #999999;
+  font-size: 16px;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+.testimonial-card {
+  position: relative;
+  background-color: #ffffff;
+  padding: 48px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .testimonial-card {
+    padding: 64px;
+  }
+}
+
+.quote-icon {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  opacity: 0.1;
+}
+
+.quote-icon svg {
+  color: #000000;
+}
+
+.stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.star svg {
+  color: #000000;
+  fill: currentColor;
+}
+
+.testimonial-content {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.testimonial-text {
+  font-size: 18px;
+  line-height: 1.9;
+  margin-bottom: 32px;
+  font-style: italic;
+
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .testimonial-text {
+    font-size: 20px;
+  }
+}
+
+.client-info {
+  margin-top: 20px;
+}
+
+.client-name {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.client-location {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+.client-project {
+  font-size: 13px;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.dot {
+  height: 4px;
+  border: none;
+  padding: 0;
+  background-color: #d1d1d1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 32px;
+}
+
+.dot.active {
+  background-color: #000000;
+  width: 48px;
+}
+
+.client-count {
+  text-align: center;
+  margin-top: 48px;
+  color: #ffffff;
+}
+
+.count-number {
+  font-size: 48px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.count-label {
+  color: #999999;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}

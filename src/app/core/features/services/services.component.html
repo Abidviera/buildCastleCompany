@@ -1,6 +1,13 @@
 <section id="services" class="services-section">
   <div class="services-container">
-    <h2 class="services-title" data-aos="fade-up" data-aos-delay="100">
+    <h2
+      class="services-title"
+      data-aos="fade-up"
+      data-aos-delay="100"
+      data-aos-duration="800"
+      data-aos-easing="ease-out-quint"
+      data-aos-offset="50"
+    >
       OUR SERVICES
     </h2>
 
@@ -9,16 +16,39 @@
         *ngFor="let service of services; let i = index"
         class="service-card"
         [attr.data-index]="i"
-        data-aos="fade-up"
-        data-aos-duration="800"
-        data-aos-easing="ease-out-cubic"
+        data-aos="zoom-in"
+        data-aos-duration="600"
+        data-aos-easing="ease-out-back"
+        data-aos-offset="50"
+        data-aos-mirror="true"
+        data-aos-once="false"
       >
-        <div class="service-icon-wrapper">
+        <div
+          class="service-icon-wrapper"
+          data-aos="flip-left"
+          [attr.data-aos-delay]="200 + i * 100"
+          data-aos-duration="500"
+          data-aos-easing="ease-out-cubic"
+        >
           <i class="service-icon" [ngClass]="service.icon"></i>
         </div>
 
-        <h3 class="service-title">{{ service.title }}</h3>
-        <p class="service-description">{{ service.description }}</p>
+        <h3
+          class="service-title"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="300 + i * 100"
+          data-aos-duration="400"
+        >
+          {{ service.title }}
+        </h3>
+        <p
+          class="service-description"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="350 + i * 100"
+          data-aos-duration="400"
+        >
+          {{ service.description }}
+        </p>
       </div>
     </div>
   </div>

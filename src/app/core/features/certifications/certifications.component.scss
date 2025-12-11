@@ -1,0 +1,238 @@
+.certifications-section {
+  background-color: var(--color-white);
+  padding: 100px 0;
+  
+  @media (max-width: 768px) {
+    padding: 60px 0;
+  }
+}
+
+.certifications-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-6 {
+  margin-bottom: 24px;
+}
+
+.mb-16 {
+  margin-bottom: 64px;
+}
+
+.mb-24 {
+  margin-bottom: 96px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 60px;
+  }
+}
+
+.section-description {
+  color: var(--color-text);
+  font-size: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.certification-card {
+  text-align: center;
+  padding: 32px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-primary);
+    
+    .icon-container {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+}
+
+.cert-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-primary);
+}
+
+.cert-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: var(--color-primary);
+}
+
+.cert-description {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+.achievements-section {
+  background-color: var(--color-secondary);
+  margin: 0 -40px;
+  padding: 80px 40px;
+  
+  @media (min-width: 768px) {
+    padding: 100px 40px;
+  }
+  
+  @media (max-width: 768px) {
+    margin: 0 -20px;
+    padding: 60px 20px;
+  }
+}
+
+.achievements-title {
+  color: var(--color-white);
+  font-size: 2.75rem;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.achievements-description {
+  color: #9ca3af;
+  font-size: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.achievement-card {
+  text-align: center;
+  padding: 32px;
+  border: 1px solid #374151;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.achievement-icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.achievement-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--color-white);
+}
+
+.achievement-stat {
+  font-size: 48px;
+  color: var(--color-white);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+
+.achievement-label {
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: var(--color-white);
+}
+
+.achievement-description {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .certifications-container,
+  .achievements-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .certification-card,
+  .achievement-card {
+    padding: 24px;
+  }
+  
+  .achievement-stat {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .certifications-grid,
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .certification-card,
+  .achievement-card {
+    padding: 20px;
+  }
+  
+  .achievement-stat {
+    font-size: 32px;
+  }
+}
