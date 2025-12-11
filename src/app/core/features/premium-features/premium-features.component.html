@@ -1,0 +1,243 @@
+<section class="premium-features-section">
+
+ 
+
+
+  <div class="floating-particles">
+    <div
+      *ngFor="let particle of [].constructor(20); let i = index"
+      class="particle"
+      [ngStyle]="getParticleStyle(i)"
+    ></div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header" data-aos="fade-up" data-aos-delay="100">
+      <div class="header-badge" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon-wrapper">
+          <i [class]="icons.sparkles"></i>
+        </div>
+        <span class="badge-text">PREMIUM ADVANTAGES</span>
+        <div class="icon-wrapper">
+          <i [class]="icons.sparkles"></i>
+        </div>
+      </div>
+      <h2 class="title" data-aos="fade-up" data-aos-delay="300">
+        EXPERIENCE THE
+        <br />
+        <span class="gradient-text">BUILD CASTLE DIFFERENCE</span>
+      </h2>
+      <p class="description" data-aos="fade-up" data-aos-delay="400">
+        Advanced technology, premium materials, and innovative solutions for
+        your dream home
+      </p>
+    </div>
+
+    <!-- Main Feature Showcase -->
+    <div class="feature-showcase">
+      <!-- Feature Navigation -->
+      <div class="feature-navigation">
+        <div
+          *ngFor="let feature of premiumFeatures; let index = index"
+          class="feature-card"
+          [class.active]="selectedFeature === index"
+          [style.box-shadow]="
+            selectedFeature === index
+              ? '0 0 30px ' + feature.color + '40'
+              : 'none'
+          "
+          (click)="selectFeature(index)"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="100 * (index + 1)"
+          data-aos-offset="50"
+        >
+          <div class="feature-content">
+            <div
+              class="icon-container"
+              [style.background]="
+                selectedFeature === index
+                  ? 'linear-gradient(135deg, ' +
+                    feature.color +
+                    ', ' +
+                    feature.color +
+                    'dd)'
+                  : 'rgba(255,255,255,0.1)'
+              "
+              [style.transform]="
+                selectedFeature === index
+                  ? 'scale(1.1) rotate(360deg)'
+                  : 'scale(1)'
+              "
+            >
+              <div class="icon-wrapper">
+                <i [class]="feature.icon"></i>
+              </div>
+            </div>
+
+            <div class="feature-details">
+              <h3>{{ feature.title }}</h3>
+              <p class="feature-description">{{ feature.description }}</p>
+
+              <div
+                *ngIf="selectedFeature === index"
+                class="feature-list animate-slideIn"
+              >
+                <div *ngFor="let item of feature.features" class="feature-item">
+                  <div class="icon-wrapper-small">
+                    <i [class]="icons.checkCircle"></i>
+                  </div>
+                  {{ item }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="selectedFeature === index" class="active-indicator">
+              <div class="pulse-dot" [style.background]="feature.color"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Image Display -->
+      <div
+        class="feature-image-display"
+        data-aos="zoom-in"
+        data-aos-delay="600"
+      >
+        <div
+          *ngFor="let feature of premiumFeatures; let index = index"
+          class="feature-image-container"
+          [class.active]="selectedFeature === index"
+        >
+          <div class="image-wrapper">
+            <img
+              [src]="getImageUrl(feature.image)"
+              [alt]="feature.title"
+              (error)="handleImageError(feature.image)"
+              class="feature-image"
+            />
+            <div class="image-overlay"></div>
+
+            <!-- Feature Badge -->
+            <div
+              class="feature-badge"
+              data-aos="fade-left"
+              data-aos-delay="800"
+            >
+              <p>PREMIUM FEATURE</p>
+            </div>
+
+            <!-- Bottom Info -->
+            <div class="image-info" data-aos="fade-up" data-aos-delay="900">
+              <h3>{{ feature.title }}</h3>
+              <div class="gradient-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Statistics Dashboard -->
+    <div class="stats-dashboard" data-aos="fade-up" data-aos-delay="400">
+      <div class="stats-header" data-aos="fade-up">
+        <h3>PROVEN EXCELLENCE</h3>
+        <p>Real metrics from our completed projects</p>
+      </div>
+
+      <div class="stats-grid">
+        <div
+          *ngFor="let stat of liveStats; let index = index"
+          class="stat-card"
+          [style.animation-delay]="index * 0.1 + 's'"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="200 + index * 100"
+          data-aos-offset="50"
+        >
+          <div
+            class="stat-background"
+            [style.background]="
+              'linear-gradient(135deg, ' + stat.color + '20, transparent)'
+            "
+          ></div>
+
+          <div class="stat-content">
+            <div class="stat-header">
+              <div
+                class="stat-icon-container"
+                [style.background]="
+                  'linear-gradient(135deg, ' +
+                  stat.color +
+                  '40, ' +
+                  stat.color +
+                  '20)'
+                "
+              >
+                <div class="icon-wrapper">
+                  <i [class]="stat.icon"></i>
+                </div>
+              </div>
+              <div class="pulse-dot" [style.background]="stat.color"></div>
+            </div>
+
+            <div class="stat-value">
+              {{ animatedStats[index] }}
+              <span class="stat-suffix">{{ stat.suffix }}</span>
+            </div>
+
+            <div class="stat-label">{{ stat.label }}</div>
+
+            <!-- Progress bar -->
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                [style.width]="getProgressWidth(index)"
+                [style.background]="
+                  'linear-gradient(90deg, ' + stat.color + ', transparent)'
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Innovation Highlights -->
+    <div class="innovation-grid">
+      <div
+        *ngFor="let item of innovationHighlights; let index = index"
+        class="innovation-card"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="index * 100"
+        data-aos-offset="50"
+      >
+        <div class="innovation-icon">
+          <div class="icon-wrapper">
+            <i [class]="item.icon"></i>
+          </div>
+        </div>
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="cta-section" data-aos="fade-up" data-aos-delay="300">
+      <div class="cta-container" data-aos="zoom-in" data-aos-delay="400">
+        <h3>Ready for Premium Quality?</h3>
+        <p>Experience construction excellence with BUILD CASTLE®</p>
+        <button
+          (click)="scrollToContact()"
+          class="cta-button"
+          data-aos="fade-up"
+          data-aos-delay="500"
+        >
+          START YOUR PREMIUM PROJECT
+          <div class="icon-wrapper">
+            <i [class]="icons.sparkles"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

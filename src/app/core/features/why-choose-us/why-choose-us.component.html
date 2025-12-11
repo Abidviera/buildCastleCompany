@@ -1,0 +1,127 @@
+<section class="why-choose-us">
+  <div class="container">
+    <div class="grid">
+      <div class="content-col">
+        <h2 
+          class="section-title"
+          data-aos="fade-up"
+          data-aos-delay="0"
+          data-aos-offset="100"
+        >
+          WHY CHOOSE<br />
+          BUILD CASTLE<sup class="trademark">®</sup>
+        </h2>
+        
+        <div 
+          class="description"
+          data-aos="fade-up"
+          data-aos-delay="50"
+          data-aos-offset="100"
+        >
+          <p class="text">
+            With BUILD CASTLE®, you're not just hiring a construction company – you're 
+            partnering with a team that genuinely cares about your dream home. Our comprehensive 
+            services cover every aspect of construction, from planning to completion.
+          </p>
+          <p class="text">
+            We combine traditional craftsmanship with modern techniques to deliver homes that 
+            stand the test of time. Our transparent approach means no hidden costs, no surprises 
+            – just honest, quality work.
+          </p>
+        </div>
+        
+        <div 
+          class="features"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-offset="80"
+        >
+          <div 
+            class="feature-item"
+            data-aos="fade-right"
+            data-aos-delay="150"
+            data-aos-offset="50"
+          >
+            <div class="bullet"></div>
+            <p class="feature-text">
+              <strong>All-in-One Solution:</strong> Engineering, Construction, and Design under one roof
+            </p>
+          </div>
+          <div 
+            class="feature-item"
+            data-aos="fade-right"
+            data-aos-delay="200"
+            data-aos-offset="50"
+          >
+            <div class="bullet"></div>
+            <p class="feature-text">
+              <strong>Licensed Professionals:</strong> Certified engineers and approved contractors
+            </p>
+          </div>
+          <div 
+            class="feature-item"
+            data-aos="fade-right"
+            data-aos-delay="250"
+            data-aos-offset="50"
+          >
+            <div class="bullet"></div>
+            <p class="feature-text">
+              <strong>Local Expertise:</strong> Deep understanding of Kallumpuram area regulations
+            </p>
+          </div>
+          <div 
+            class="feature-item"
+            data-aos="fade-right"
+            data-aos-delay="300"
+            data-aos-offset="50"
+          >
+            <div class="bullet"></div>
+            <p class="feature-text">
+              <strong>Customer First:</strong> Your satisfaction drives everything we do
+            </p>
+          </div>
+        </div>
+        
+        <a 
+          href="#contact"
+          class="cta-button"
+          data-aos="fade-up"
+        
+          data-aos-offset="100"
+        >
+          Start Your Project
+        </a>
+      </div>
+      
+      <div 
+        class="image-col"
+        data-aos="fade-left"
+        data-aos-delay="200"
+        data-aos-offset="100"
+      >
+        <div class="image-wrapper" *ngIf="imageError; else showImage">
+          <div class="error-container">
+            <img 
+              [src]="ERROR_IMG_SRC" 
+              alt="Error loading image" 
+              class="error-image"
+              [attr.data-original-url]="imageSrc"
+            />
+          </div>
+        </div>
+        
+        <ng-template #showImage>
+          <img
+            [src]="imageSrc"
+            alt="BUILD CASTLE Construction"
+            class="main-image"
+            (error)="onImageError()"
+            data-aos="zoom-in"
+            data-aos-delay="250"
+            data-aos-duration="800"
+          />
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,235 @@
+<section class="cost-calculator" data-aos="fade-up" data-aos-duration="600">
+  <div class="calculator-container">
+    <div class="header-section">
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+        INSTANT COST<br />CALCULATOR
+      </h2>
+      <p 
+        class="section-description" 
+        data-aos="fade-up" 
+        data-aos-delay="200"
+      >
+        Get a quick estimate for your construction project. This is an
+        approximate calculation - contact us for a detailed, accurate quote.
+      </p>
+    </div>
+
+    <div class="calculator-grid">
+      <!-- Calculator Form -->
+      <div 
+        class="calculator-form" 
+        data-aos="fade-right" 
+        data-aos-delay="300"
+      >
+        <div class="form-header">
+          <div class="icon-wrapper" [innerHTML]="calculatorIcon"></div>
+          <h3>Calculate Your Project Cost</h3>
+        </div>
+
+        <form
+          (submit)="calculateEstimate($event)"
+          class="cost-form"
+          #costForm="ngForm"
+        >
+          <div 
+            class="form-group" 
+            data-aos="fade-up" 
+            data-aos-delay="400"
+          >
+            <label class="form-label"> Project Type * </label>
+            <select
+              name="projectType"
+              [(ngModel)]="formData.projectType"
+              (change)="handleChange('projectType', getValueFromEvent($event))"
+              required
+              class="form-select"
+            >
+              <option value="">Select Project Type</option>
+              <option value="new-construction">New Construction</option>
+              <option value="renovation">Renovation</option>
+              <option value="interior">Interior Design Only</option>
+            </select>
+          </div>
+
+          <div 
+            class="form-group" 
+            data-aos="fade-up" 
+            data-aos-delay="450"
+          >
+            <label class="form-label"> Area (Square Feet) * </label>
+            <input
+              type="number"
+              name="area"
+              [(ngModel)]="formData.area"
+              (input)="handleChange('area', getValueFromEvent($event))"
+              placeholder="e.g., 1500"
+              required
+              min="100"
+              class="form-input"
+            />
+          </div>
+
+          <div 
+            class="form-group" 
+            data-aos="fade-up" 
+            data-aos-delay="500"
+          >
+            <label class="form-label"> Quality Level * </label>
+            <select
+              name="quality"
+              [(ngModel)]="formData.quality"
+              (change)="handleChange('quality', getValueFromEvent($event))"
+              required
+              class="form-select"
+            >
+              <option value="">Select Quality</option>
+              <option value="standard">Standard</option>
+              <option value="premium">Premium</option>
+              <option value="luxury">Luxury</option>
+            </select>
+          </div>
+
+          <div 
+            class="form-group" 
+            data-aos="fade-up" 
+            data-aos-delay="550"
+          >
+            <label class="form-label"> Number of Floors </label>
+            <select
+              name="floors"
+              [(ngModel)]="formData.floors"
+              (change)="handleChange('floors', getValueFromEvent($event))"
+              class="form-select"
+            >
+              <option value="1">Single Floor</option>
+              <option value="2">Two Floors</option>
+              <option value="3">Three Floors</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="calculate-button"
+            [disabled]="costForm.invalid"
+            data-aos="fade-up"
+            data-aos-delay="600"
+            data-aos-anchor-placement="top-bottom"
+          >
+            <div class="icon-wrapper-small" [innerHTML]="calculatorIcon"></div>
+            <span>Calculate Estimate</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Results -->
+      <div 
+        class="results-section" 
+        data-aos="fade-left" 
+        data-aos-delay="300"
+      >
+        <div 
+          *ngIf="showResult && estimate" 
+          class="results-content"
+          data-aos="fade-up"
+          data-aos-duration="500"
+        >
+          <div 
+            class="estimate-card" 
+            data-aos="zoom-in" 
+            data-aos-delay="100"
+          >
+            <div class="estimate-header">
+              <div class="icon-wrapper" [innerHTML]="dollarIcon"></div>
+              <h3 class="estimate-title">Estimated Cost</h3>
+            </div>
+            <div class="estimate-amount" data-aos="zoom-in" data-aos-delay="200">
+              {{ formatCurrency(estimate) }}
+            </div>
+            <p class="estimate-disclaimer">
+              This is an approximate estimate. Final cost may vary based on
+              specific requirements, materials chosen, and site conditions.
+            </p>
+          </div>
+
+          <div 
+            class="included-list" 
+            data-aos="fade-up" 
+            data-aos-delay="300"
+          >
+            <h4 class="list-title">What's Included</h4>
+            <div class="list-items">
+              <div 
+                class="list-item" 
+                *ngFor="let item of includedItems; let i = index"
+                [attr.data-aos]="'fade-right'"
+                [attr.data-aos-delay]="300 + (i * 50)"
+              >
+                <div class="list-bullet"></div>
+                <span>{{ item }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            class="cta-section" 
+            data-aos="fade-up" 
+            data-aos-delay="600"
+          >
+            <h4 class="cta-title">Want a Detailed Quote?</h4>
+            <p class="cta-description">
+              Get a comprehensive, itemized estimate with no hidden costs
+            </p>
+            <a 
+              href="#contact" 
+              class="cta-button"
+              data-aos="zoom-in"
+              data-aos-delay="700"
+            >
+              Request Detailed Quote
+            </a>
+          </div>
+        </div>
+
+        <div 
+          *ngIf="!showResult || !estimate" 
+          class="placeholder-section"
+          data-aos="fade-in"
+          data-aos-delay="400"
+        >
+          <div class="placeholder-content">
+            <div 
+              class="placeholder-icon"
+              data-aos="zoom-in"
+              data-aos-delay="500"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+
+            <h4 
+              class="placeholder-title"
+              data-aos="fade-up"
+              data-aos-delay="600"
+            >
+              Enter Your Project Details
+            </h4>
+            <p 
+              class="placeholder-description"
+              data-aos="fade-up"
+              data-aos-delay="700"
+            >
+              Fill in the form to get an instant cost estimate for your project
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
