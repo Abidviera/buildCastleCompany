@@ -1,0 +1,251 @@
+<section class="services-section">
+  <div class="container">
+    <!-- Animated Section Title -->
+    <h2 
+      class="section-title"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="600"
+    >
+      EXPLORE OUR SERVICES<br />IN DETAIL
+    </h2>
+    
+    <!-- Animated Subtitle -->
+    <p 
+      class="section-subtitle"
+      data-aos="fade-up"
+      data-aos-delay="100"
+      data-aos-duration="600"
+    >
+      Click on any service below to discover comprehensive details, benefits, 
+      our process, and successful projects we've completed
+    </p>
+
+    <!-- Services Grid with Staggered Animations -->
+    <div class="services-grid">
+      <div 
+        *ngFor="let service of servicesData; let i = index"
+        class="service-card"
+        (click)="selectService(service)"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="150 + (i * 50)"
+        data-aos-duration="500"
+        data-aos-once="true"
+      >
+        <div class="service-image-container">
+          <img 
+            [src]="service.images[0]" 
+            [alt]="service.title"
+            class="service-image"
+            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg=='"
+          />
+        </div>
+        <h3 class="service-title">{{ service.title }}</h3>
+        <p class="service-subtitle">{{ service.subtitle }}</p>
+        <div class="learn-more">
+          <span>Learn More</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Detail Modal -->
+<div 
+  *ngIf="selectedService"
+  class="modal-overlay"
+  (click)="closeModal()"
+  data-aos="fade-in"
+  data-aos-duration="300"
+  data-aos-easing="ease-out"
+>
+  <div class="modal-container">
+    <div 
+      class="modal-content"
+      (click)="stopPropagation($event)"
+      data-aos="zoom-in"
+      data-aos-duration="400"
+      data-aos-easing="ease-out-back"
+    >
+      <!-- Close Button -->
+      <button
+        class="close-button"
+        (click)="closeModal()"
+        data-aos="fade-left"
+        data-aos-delay="100"
+        data-aos-duration="300"
+      >
+        <span class="close-icon">×</span>
+      </button>
+
+      <!-- Hero Image with Animation -->
+      <div 
+        class="modal-hero-image"
+        data-aos="fade-down"
+        data-aos-delay="50"
+        data-aos-duration="500"
+      >
+        <img 
+          [src]="selectedService.images[0]" 
+          [alt]="selectedService.title"
+          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg=='"
+        />
+      </div>
+
+      <!-- Content with Staggered Animations -->
+      <div class="modal-body">
+        <!-- Title Section -->
+        <div 
+          class="modal-title-section"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="400"
+        >
+          <h2 class="modal-main-title">{{ selectedService.title }}</h2>
+          <p class="modal-subtitle">{{ selectedService.subtitle }}</p>
+        </div>
+
+        <!-- Description -->
+        <div 
+          class="modal-description"
+          data-aos="fade-up"
+          data-aos-delay="150"
+          data-aos-duration="400"
+        >
+          <p>{{ selectedService.description }}</p>
+        </div>
+
+        <!-- Stats -->
+        <div 
+          class="modal-stats"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="400"
+        >
+          <div 
+            *ngFor="let stat of selectedService.stats; let i = index" 
+            class="stat-item"
+            data-aos="zoom-in"
+            [attr.data-aos-delay]="200 + (i * 100)"
+          >
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+
+        <!-- Benefits -->
+        <div 
+          class="modal-section"
+          data-aos="fade-up"
+          data-aos-delay="250"
+          data-aos-duration="400"
+        >
+          <div class="section-header">
+            <span class="section-icon"><i class="bi bi-graph-up-arrow"></i></span>
+            <h3>Key Benefits</h3>
+          </div>
+          <div class="benefits-grid">
+            <div 
+              *ngFor="let benefit of selectedService.benefits; let i = index" 
+              class="benefit-item"
+              data-aos="fade-right"
+              [attr.data-aos-delay]="300 + (i * 50)"
+            >
+              <span class="check-icon">✓</span>
+              <p>{{ benefit }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div 
+          class="modal-section"
+          data-aos="fade-up"
+          data-aos-delay="350"
+          data-aos-duration="400"
+        >
+          <div class="section-header">
+            <span class="section-icon"><i class="bi bi-shield-check"></i></span>
+            <h3>What We Provide</h3>
+          </div>
+          <div class="features-grid">
+            <div 
+              *ngFor="let feature of selectedService.features; let i = index" 
+              class="feature-item"
+              data-aos="fade-left"
+              [attr.data-aos-delay]="400 + (i * 50)"
+            >
+              <span class="feature-dot"></span>
+              <p>{{ feature }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div 
+          class="modal-section"
+          data-aos="fade-up"
+          data-aos-delay="450"
+          data-aos-duration="400"
+        >
+          <div class="section-header">
+            <span class="section-icon"><i class="bi bi-clock"></i></span>
+            <h3>Our Process</h3>
+          </div>
+          <div class="process-list">
+            <div 
+              *ngFor="let step of selectedService.process; let i = index" 
+              class="process-step"
+              data-aos="fade-up"
+              [attr.data-aos-delay]="500 + (i * 100)"
+            >
+              <div class="step-number">{{ i + 1 }}</div>
+              <div class="step-content">
+                <p>{{ step }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Image -->
+        <div 
+          *ngIf="selectedService.images[1]" 
+          class="modal-secondary-image"
+          data-aos="fade-up"
+          data-aos-delay="550"
+          data-aos-duration="500"
+        >
+          <img 
+            [src]="selectedService.images[1]" 
+            [alt]="selectedService.title + ' Example'"
+            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg=='"
+          />
+        </div>
+
+        <!-- CTA -->
+        <div 
+          class="modal-cta"
+          data-aos="fade-up"
+          data-aos-delay="600"
+          data-aos-duration="400"
+        >
+          <h3>Ready to Get Started?</h3>
+          <p class="cta-description">
+            Contact us today for a free consultation and detailed quote for your project. 
+            Let's turn your vision into reality!
+          </p>
+          <a
+            href="#contact"
+            (click)="closeModal()"
+            class="cta-button"
+            data-aos="zoom-in"
+            data-aos-delay="700"
+          >
+            Request Free Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

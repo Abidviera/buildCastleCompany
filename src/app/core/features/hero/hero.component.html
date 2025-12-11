@@ -3,10 +3,14 @@
   <div class="floating-shapes">
     <div 
       class="shape shape-square"
+      data-aos="fade-down"
+      data-aos-delay="200"
       [style.transform]="'translate(' + (mousePosition.x * 30) + 'px, ' + (mousePosition.y * 30) + 'px)'">
     </div>
     <div 
       class="shape shape-circle"
+      data-aos="fade-up"
+      data-aos-delay="400"
       [style.transform]="'translate(' + (mousePosition.x * -40) + 'px, ' + (mousePosition.y * -40) + 'px)'">
     </div>
   </div>
@@ -35,7 +39,7 @@
         <!-- Left Side - Text Content -->
         <div class="text-content">
           <!-- Slide Counter -->
-          <div class="slide-counter" >
+          <div class="slide-counter" data-aos="fade-right" data-aos-delay="600">
             <span class="counter-current">0{{ currentSlide + 1 }}</span>
             <div class="counter-progress">
               <div 
@@ -48,7 +52,7 @@
 
           <!-- Title with Animated Text -->
           <div class="title-container">
-            <h1 class="hero-title" >
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="800">
               <span 
                 *ngFor="let word of getCurrentWords(); let i = index"
                 class="title-word"
@@ -58,13 +62,13 @@
               </span>
             </h1>
 
-            <p class="hero-subtitle" >
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="1000">
               {{ heroSlides[currentSlide].subtitle }}
             </p>
           </div>
 
           <!-- CTA Buttons -->
-          <div class="button-group" >
+          <div class="button-group" data-aos="fade-up" data-aos-delay="1200">
             <button 
               class="btn btn-primary"
               (click)="scrollToSection('contact')">
@@ -75,6 +79,8 @@
 
             <button 
               class="btn btn-secondary"
+              data-aos="fade-up"
+              data-aos-delay="1400"
               (click)="scrollToSection('services')">
               EXPLORE SERVICES
             </button>
@@ -89,7 +95,9 @@
               class="nav-slide-item"
               [class.active]="i === currentSlide"
               (click)="goToSlide(i)"
-              [style.height]="i === currentSlide ? '192px' : '96px'">
+              [style.height]="i === currentSlide ? '192px' : '96px'"
+              data-aos="zoom-in"
+              [attr.data-aos-delay]="600 + (i * 200)">
               <div 
                 class="nav-slide-bg"
                 [style.background-image]="'url(' + slide.image + ')'">
@@ -112,7 +120,7 @@
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1600">
       <span class="scroll-text">SCROLL</span>
       <svg class="scroll-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="6 9 12 15 18 9"></polyline>
@@ -124,7 +132,10 @@
   <div class="stats-bar">
     <div class="stats-container">
       <div class="stats-grid">
-        <div class="stat-item" *ngFor="let stat of statsData; let i = index">
+        <div 
+          *ngFor="let stat of statsData; let i = index"
+          class="stat-item"
+        >
           <div class="stat-value">{{ stat.value }}+</div>
           <div class="stat-label">{{ stat.label }}</div>
         </div>

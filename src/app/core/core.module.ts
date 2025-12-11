@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { ServicesComponent } from './features/services/services.component';
 import { HeroComponent } from './features/hero/hero.component';
 import { HeaderComponent } from './features/header/header.component';
+import { ServicesdetailedComponent } from './features/servicesdetailed/servicesdetailed.component';
+import { AboutComponent } from './features/about/about.component';
+import { ProjectsCarouselComponent } from './features/projects-carousel/projects-carousel.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { HeaderComponent } from './features/header/header.component';
     LandingpageContainerComponent,
     ServicesComponent,
     HeroComponent,
-    HeaderComponent
+    HeaderComponent,
+    ServicesdetailedComponent,
+    AboutComponent,
+    ProjectsCarouselComponent
   ],
   imports: [
     CommonModule,

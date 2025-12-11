@@ -1,0 +1,162 @@
+<section id="projects" class="projects-carousel">
+  <div class="carousel-container">
+    <div class="carousel-header">
+      <div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+          FEATURED PROJECTS
+        </h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="150">
+          Explore our portfolio of completed works
+        </p>
+      </div>
+
+      <div class="carousel-controls" data-aos="fade-up" data-aos-delay="200">
+        <button
+          (click)="prevSlide()"
+          class="control-button"
+          aria-label="Previous slide"
+        >
+          <svg
+            class="control-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          (click)="nextSlide()"
+          class="control-button"
+          aria-label="Next slide"
+        >
+          <svg
+            class="control-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop Carousel -->
+    <div class="desktop-carousel" *ngIf="!isMobile">
+      <div
+        *ngFor="let project of visibleProjects; let i = index"
+        class="project-card"
+        [style.animation-delay]="getAnimationDelay(i)"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="i * 50 + 200"
+        data-aos-once="true"
+        data-aos-duration="500"
+      >
+        <div class="image-container">
+          <div
+            *ngIf="shouldShowError(getCurrentProjectIndex(i))"
+            class="image-error"
+          >
+            <img [src]="errorImageSrc" alt="Error loading image" />
+          </div>
+          <img
+            *ngIf="!shouldShowError(getCurrentProjectIndex(i))"
+            [src]="project.image"
+            [alt]="project.title"
+            (error)="onImageError(getCurrentProjectIndex(i))"
+            class="project-image"
+            data-aos="zoom-in"
+            data-aos-duration="600"
+          />
+        </div>
+        <div class="project-content">
+          <div
+            class="project-category"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 50 + 300"
+          >
+            {{ project.category }}
+          </div>
+          <h3
+            class="project-title"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 50 + 350"
+          >
+            {{ project.title }}
+          </h3>
+          <p
+            class="project-description"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 50 + 400"
+          >
+            {{ project.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Grid -->
+    <div class="mobile-grid" *ngIf="isMobile">
+      <div
+        *ngFor="let project of projects; let i = index"
+        class="project-card"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="i * 100"
+        data-aos-duration="500"
+        data-aos-once="true"
+      >
+        <div class="image-container">
+          <div *ngIf="shouldShowError(i)" class="image-error">
+            <img [src]="errorImageSrc" alt="Error loading image" />
+          </div>
+          <img
+            *ngIf="!shouldShowError(i)"
+            [src]="project.image"
+            [alt]="project.title"
+            (error)="onImageError(i)"
+            class="project-image"
+            data-aos="zoom-in"
+            data-aos-duration="600"
+          />
+        </div>
+        <div class="project-content">
+          <div
+            class="project-category"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 100 + 100"
+          >
+            {{ project.category }}
+          </div>
+          <h3
+            class="project-title"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 100 + 150"
+          >
+            {{ project.title }}
+          </h3>
+          <p
+            class="project-description"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="i * 100 + 200"
+          >
+            {{ project.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="progress-dots" data-aos="fade-up" data-aos-delay="500">
+      <button
+        *ngFor="let dot of totalDots; let i = index"
+        (click)="goToSlide(i)"
+        class="progress-dot"
+        [class.active]="isDotActive(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)"
+      ></button>
+    </div>
+  </div>
+</section>

@@ -72,7 +72,7 @@ export class ServicesComponent {
         });
       });
     }
-    // this.handleScroll();
+
   }
 
   ngOnDestroy(): void {
