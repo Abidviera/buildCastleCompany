@@ -1,30 +1,38 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  ApplicationRef,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AosService } from './services/aos.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
-constructor(
+export class AppComponent implements OnInit {
+  title = 'build-castle';
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private aosService: AosService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private appRef: ApplicationRef
   ) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-   
-      this.router.events
-        .pipe(filter(event => event instanceof NavigationEnd))
+      this.appRef.isStable
+        .pipe(first((stable) => stable === true))
         .subscribe(() => {
-       
-          this.aosService.refreshAfterDelay(300);
+          setTimeout(() => {
+            this.aosService.initialize();
+          }, 300);
         });
     }
   }

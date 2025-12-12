@@ -1,11 +1,10 @@
-// src/app/core/base/aos-base.component.ts
-import { Directive, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Directive, OnDestroy, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AosService } from '../../services/aos.service';
 import { Subscription } from 'rxjs';
 
 @Directive()
-export abstract class AosBaseComponent implements OnInit, OnDestroy {
+export abstract class AosBaseComponent implements AfterViewInit, OnDestroy {
   protected aosSubscription?: Subscription;
   protected isBrowser: boolean;
 
@@ -16,34 +15,34 @@ export abstract class AosBaseComponent implements OnInit, OnDestroy {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  ngOnInit(): void {
-    if (this.isBrowser) {
-      this.aosSubscription = this.aosService.initialized$.subscribe(initialized => {
-        if (initialized) {
-          this.onAosReady();
-        }
-      });
-    }
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+
+    // Wait for AOS to be ready
+    this.aosSubscription = this.aosService.initialized$.subscribe(initialized => {
+      if (initialized) {
+        setTimeout(() => this.onAosReady(), 50);
+      }
+    });
   }
 
-  /**
-   * Override this method in child components if needed
-   */
   protected onAosReady(): void {
-    // Refresh AOS after component view is initialized
-    this.aosService.refreshAfterDelay(150);
+    // Override in child if needed
+    this.aosService.refreshAfterDelay(100);
   }
 
-  /**
-   * Helper method to refresh AOS when component data changes
-   */
   protected refreshAosOnDataChange(): void {
     if (this.isBrowser) {
-      this.aosService.refreshAfterDelay(100);
+      this.aosService.refreshAfterDelay(150);
     }
   }
 
   ngOnDestroy(): void {
     this.aosSubscription?.unsubscribe();
   }
+
+   ngOnInit(): void {
+
+  }
+
 }
