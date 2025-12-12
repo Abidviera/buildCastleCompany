@@ -1,226 +1,185 @@
+// src/app/services/aos.service.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import * as AOS from 'aos';
-
-export type AOSConfig = Partial<AOS.AosOptions>;
+import { BehaviorSubject } from 'rxjs';
+import AOS from 'aos';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AosService {
-  private isBrowser: boolean;
   private initialized = false;
-  private mobileBreakpoint = 768;
-  private defaultConfig: AOS.AosOptions;
+  private aosInstance: typeof AOS | null = null;
+  private refreshQueue: Set<string> = new Set();
+  private refreshTimeout: any;
+  
+  // Observable to track initialization status
+  public initialized$ = new BehaviorSubject<boolean>(false);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-
-    this.defaultConfig = {
-      offset: 100,
-      delay: 0,
-      duration: 600,
-      easing: 'ease-out-cubic',
-
-      once: true,
-      mirror: false,
-
-      anchorPlacement: 'top-bottom',
-
-      throttleDelay: 99,
-      debounceDelay: 50,
-
-      disable: false,
-      startEvent: 'DOMContentLoaded',
-      initClassName: 'aos-init',
-      animatedClassName: 'aos-animate',
-      useClassNames: false,
-      disableMutationObserver: false,
-    };
+    if (isPlatformBrowser(this.platformId)) {
+      this.initializeAOS();
+    }
   }
 
-  init(config?: AOSConfig): void {
-    if (!this.isBrowser || this.initialized) return;
+  private async initializeAOS(): Promise<void> {
+    if (this.initialized || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
 
-    const finalConfig: AOS.AosOptions = {
-      ...this.defaultConfig,
-      ...config,
-
-      disable:
-        config?.disable !== undefined ? config.disable : this.getDisableValue(),
-    };
-
-    AOS.init(finalConfig);
-    this.initialized = true;
-
-    this.addPerformanceListeners();
-  }
-
-  private getDisableValue(): boolean | 'phone' | 'tablet' | 'mobile' {
-    if (!this.isBrowser) return false;
-
-    const isMobile = window.innerWidth < this.mobileBreakpoint;
-
-    return isMobile ? 'mobile' : false;
-  }
-
-  private addPerformanceListeners(): void {
-    if (!this.isBrowser) return;
-
-    this.addReducedMotionListener();
-
-    this.addResponsiveResizeListener();
-  }
-
-  private addReducedMotionListener(): void {
-    if (!window.matchMedia) return;
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const handleReducedMotion = (e: MediaQueryListEvent | MediaQueryList) => {
-      if (e.matches) {
-        AOS.refresh();
+    try {
+      // Wait for DOM to be fully loaded
+      if (document.readyState === 'loading') {
+        await new Promise(resolve => {
+          document.addEventListener('DOMContentLoaded', resolve, { once: true });
+        });
       }
-    };
 
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleReducedMotion);
-    } else {
-      (mediaQuery as any).addListener(handleReducedMotion);
-    }
+      // Small delay to ensure all components are mounted
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-    handleReducedMotion(mediaQuery);
-  }
-
-  private addResponsiveResizeListener(): void {
-    let resizeTimeout: any;
-
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        this.refresh();
-      }, 250);
-    };
-
-    window.addEventListener('resize', handleResize);
-  }
-
-  updateConfig(config: AOSConfig): void {
-    if (!this.isBrowser || !this.initialized) return;
-
-    const elements = document.querySelectorAll('[data-aos]');
-    const elementStates = Array.from(elements).map((el) => ({
-      element: el,
-      hasAnimated: el.classList.contains('aos-animate'),
-    }));
-
-    elements.forEach((el) => {
-      el.classList.remove('aos-init', 'aos-animate');
-    });
-
-    const newConfig: AOS.AosOptions = {
-      ...this.defaultConfig,
-      ...config,
-      disable:
-        config.disable !== undefined ? config.disable : this.getDisableValue(),
-    };
-
-    AOS.init(newConfig);
-
-    elementStates.forEach((state) => {
-      if (state.hasAnimated) {
-        state.element.classList.add('aos-animate');
-      }
-    });
-  }
-
-  refresh(): void {
-    if (this.isBrowser && this.initialized) {
-      AOS.refresh();
-    }
-  }
-
-  isElementInViewport(element: HTMLElement, offset = 0): boolean {
-    if (!this.isBrowser) return false;
-
-    const rect = element.getBoundingClientRect();
-    const windowHeight =
-      window.innerHeight || document.documentElement.clientHeight;
-
-    return rect.top <= windowHeight - offset && rect.bottom >= offset;
-  }
-
-  getOptimizedDelay(
-    baseDelay: number,
-    index: number,
-    screenWidth?: number
-  ): number {
-    if (!this.isBrowser) return baseDelay;
-
-    const width = screenWidth || window.innerWidth;
-    const isMobile = width < this.mobileBreakpoint;
-
-    if (isMobile) {
-      const maxDelay = Math.min(baseDelay + index * 50, 300);
-      return maxDelay;
-    }
-
-    return baseDelay + index * 100;
-  }
-
-  getOptimizedDuration(elementType: string, screenWidth?: number): number {
-    if (!this.isBrowser) return 600;
-
-    const width = screenWidth || window.innerWidth;
-    const isMobile = width < this.mobileBreakpoint;
-
-    const baseDuration = isMobile ? 400 : 600;
-
-    switch (elementType) {
-      case 'text':
-      case 'title':
-        return baseDuration - 100;
-      case 'card':
-      case 'image':
-        return baseDuration;
-      case 'complex':
-        return isMobile ? 300 : 500;
-      default:
-        return baseDuration;
-    }
-  }
-
-  getOptimizedAnimationType(
-    elementType: string,
-    index: number,
-    screenWidth?: number
-  ): string {
-    const width = screenWidth || (this.isBrowser ? window.innerWidth : 1024);
-
-    if (width < 480) {
-      return 'fade';
-    } else if (width < 768) {
-      return 'fade-up';
-    } else {
-      const animations = ['fade-up', 'fade-down', 'zoom-in'];
-      return animations[index % animations.length];
-    }
-  }
-
-  isAOSAvailable(): boolean {
-    return this.isBrowser && this.initialized && typeof AOS !== 'undefined';
-  }
-
-  reinitForDynamicContent(): void {
-    if (this.isBrowser && this.initialized) {
-      const newElements = document.querySelectorAll(
-        '[data-aos]:not(.aos-init)'
-      );
-      newElements.forEach((el) => {
-        el.classList.add('aos-init');
+      // Initialize AOS with optimized settings
+      AOS.init({
+        // Animation settings
+        duration: 600,           // Optimal duration for smooth animations
+        easing: 'ease-out-cubic', // Smooth easing
+        once: true,              // Animate only once for better performance
+        
+        // Trigger settings
+        offset: 80,              // Start animation 80px before element enters viewport
+        delay: 0,                // No delay by default (use data-aos-delay for specific elements)
+        
+        // Performance optimizations
+        disable: false,          // Enable on all devices (we'll handle performance differently)
+        throttleDelay: 99,       // Throttle scroll events
+        debounceDelay: 50,       // Debounce resize events
+        
+        // Behavior settings
+        mirror: false,           // Don't animate on scroll up (better performance)
+        anchorPlacement: 'top-bottom', // Trigger when element top hits viewport bottom
+        startEvent: 'DOMContentLoaded',
+        
+        // Advanced settings
+        disableMutationObserver: false, // Keep enabled for dynamic content
+        initClassName: 'aos-init',
+        animatedClassName: 'aos-animate',
+        useClassNames: false
       });
 
-      this.refresh();
+      this.aosInstance = AOS;
+      this.initialized = true;
+      this.initialized$.next(true);
+
+      // Setup intelligent refresh system
+      this.setupIntelligentRefresh();
+
+      console.log('✅ AOS initialized successfully');
+    } catch (error) {
+      console.error('❌ AOS initialization failed:', error);
     }
+  }
+
+  private setupIntelligentRefresh(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    // Refresh on window load (catches late-loading images)
+    window.addEventListener('load', () => {
+      this.smartRefresh('window-load');
+    }, { once: true, passive: true });
+
+    // Debounced resize handler
+    let resizeTimeout: any;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.smartRefresh('resize');
+      }, 150);
+    }, { passive: true });
+
+    // Refresh after route changes (for SPAs)
+    // Note: You might need to integrate this with your router if needed
+  }
+
+  /**
+   * Smart refresh with debouncing to prevent excessive calls
+   */
+  public smartRefresh(source: string = 'manual'): void {
+    if (!this.initialized || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    // Add to queue
+    this.refreshQueue.add(source);
+
+    // Clear existing timeout
+    clearTimeout(this.refreshTimeout);
+
+    // Debounce refresh calls
+    this.refreshTimeout = setTimeout(() => {
+      if (this.aosInstance) {
+        this.aosInstance.refresh();
+        console.log(`🔄 AOS refreshed from: ${Array.from(this.refreshQueue).join(', ')}`);
+        this.refreshQueue.clear();
+      }
+    }, 100);
+  }
+
+  /**
+   * Force immediate refresh (use sparingly)
+   */
+  public forceRefresh(): void {
+    if (this.initialized && this.aosInstance && isPlatformBrowser(this.platformId)) {
+      this.aosInstance.refresh();
+    }
+  }
+
+  /**
+   * Refresh after a delay (useful for after DOM updates)
+   */
+  public refreshAfterDelay(delay: number = 100): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
+    setTimeout(() => {
+      this.smartRefresh('delayed');
+    }, delay);
+  }
+
+  /**
+   * Check if AOS is initialized
+   */
+  public isInitialized(): boolean {
+    return this.initialized;
+  }
+
+  /**
+   * Cleanup (call this in app component ngOnDestroy if needed)
+   */
+  public cleanup(): void {
+    if (this.aosInstance && isPlatformBrowser(this.platformId)) {
+      this.aosInstance.refreshHard();
+      clearTimeout(this.refreshTimeout);
+    }
+  }
+
+  /**
+   * Get optimal animation delay for staggered animations
+   */
+  public getStaggerDelay(index: number, baseDelay: number = 100): number {
+    return index * baseDelay;
+  }
+
+  /**
+   * Apply animations to dynamically added elements
+   */
+  public applyToElement(element: HTMLElement): void {
+    if (!this.initialized || !isPlatformBrowser(this.platformId)) return;
+    
+    // Add AOS attributes if they don't exist
+    if (!element.hasAttribute('data-aos')) {
+      element.setAttribute('data-aos', 'fade-up');
+    }
+    
+    // Trigger refresh
+    this.refreshAfterDelay(50);
   }
 }

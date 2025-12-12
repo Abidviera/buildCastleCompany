@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import AOS from 'aos';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { AosBaseComponent } from '../../base/aos.base.component';
+import { AosService } from '../../../services/aos.service';
 
 interface TeamMember {
   name: string;
@@ -29,7 +29,7 @@ interface ExpertiseItem {
   templateUrl: './team-showcase.component.html',
   styleUrl: './team-showcase.component.scss'
 })
-export class TeamShowcaseComponent {
+export class TeamShowcaseComponent  extends AosBaseComponent{
   activeTab: 'team' | 'expertise' = 'team';
   
   private aosInitialized = false;
@@ -131,45 +131,23 @@ export class TeamShowcaseComponent {
     'shield-check': 'bi bi-shield-check'
   };
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
-    this.initAOS();
+   constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
+    aosService: AosService
+  ) {
+    super(platformId, aosService);
   }
 
-  private initAOS(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
 
-    // Only initialize AOS once
-    if (!this.aosInitialized) {
-      AOS.init({
-        duration: 600,
-        easing: 'ease-out-cubic',
-        once: true,
-        offset: 50,
-        delay: 0,
-        disable: false,
-        anchorPlacement: 'top-bottom',
-        mirror: false,
-        throttleDelay: 99,
-        debounceDelay: 50,
-      });
-      this.aosInitialized = true;
-    }
-  }
+  
 
   setTab(tab: 'team' | 'expertise') {
     this.activeTab = tab;
-    if (isPlatformBrowser(this.platformId) && this.aosInitialized) {
-      // Refresh AOS to animate new content
-      setTimeout(() => {
-        AOS.refresh();
-      }, 50);
-    }
+    this.refreshAosOnDataChange();
   }
 
-  scrollToContact() {
-    if (!isPlatformBrowser(this.platformId)) return;
+    scrollToContact() {
+    if (!this.isBrowser) return;
 
     const element = document.getElementById('contact');
     if (element) {
@@ -186,18 +164,15 @@ export class TeamShowcaseComponent {
     img.onerror = null;
   }
 
-  // Method to get Bootstrap icon class (if you need dynamic icon selection)
   getBootstrapIconClass(iconName: string): string {
     return this.bootstrapIconMap[iconName] || 'bi bi-question-circle';
   }
 
   getBootstrapIconClassForAchievements(iconName: string): string {
-    // Achievements might use slightly different styling
     const baseClass = this.bootstrapIconMap[iconName] || 'bi bi-question-circle';
     return baseClass;
   }
 
-  // Optional: If you need to handle icon changes dynamically
   updateIcon(iconName: string, newIconClass: string): void {
     this.bootstrapIconMap[iconName] = newIconClass;
   }

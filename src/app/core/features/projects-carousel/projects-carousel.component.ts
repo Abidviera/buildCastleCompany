@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener, Inject, PLATFORM_ID, AfterViewInit, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { AosBaseComponent } from '../../base/aos.base.component';
+import { AosService } from '../../../services/aos.service';
 
 interface Project {
   category: string;
@@ -12,9 +13,17 @@ interface Project {
   selector: 'app-projects-carousel',
   standalone: false,
   templateUrl: './projects-carousel.component.html',
-  styleUrl: './projects-carousel.component.scss'
+  styleUrl: './projects-carousel.component.scss',
 })
-export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProjectsCarouselComponent extends AosBaseComponent {
+  currentIndex = 0;
+  itemsPerView = 3;
+  isMobile = false;
+
+  errorImageSrc =
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg==';
+  imageErrors: { [key: number]: boolean } = {};
+
   projects: Project[] = [
     {
       category: 'Interior Design',
@@ -60,27 +69,12 @@ export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestr
     },
   ];
 
-  currentIndex = 0;
-  itemsPerView = 3;
-  isMobile = false;
-  private aosInitialized = false;
-
-  // Error image SVG as base64
-  errorImageSrc =
-    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg==';
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
+  constructor(@Inject(PLATFORM_ID) platformId: Object, aosService: AosService) {
+    super(platformId, aosService);
+  }
+  protected override onAosReady(): void {
+    super.onAosReady();
     this.checkIfMobile();
-  }
-
-  ngAfterViewInit(): void {
-    this.initAOS();
-  }
-
-  ngOnDestroy(): void {
-    this.destroyAOS();
   }
 
   @HostListener('window:resize')
@@ -88,58 +82,10 @@ export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestr
     this.checkIfMobile();
   }
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    this.refreshAOS();
-  }
-
   private checkIfMobile(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isBrowser) {
       this.isMobile = window.innerWidth < 768;
       this.itemsPerView = this.isMobile ? 1 : 3;
-    }
-  }
-
-  private initAOS(): void {
-    if (isPlatformBrowser(this.platformId) && !this.aosInitialized) {
-      import('aos').then(aos => {
-        aos.default.init({
-          duration: 600,
-          easing: 'ease-out-cubic',
-          once: true,
-          offset: 50,
-          delay: 0,
-          disable: this.isMobile ? false : false, // Keep enabled for mobile if needed
-          anchorPlacement: 'top-bottom',
-          mirror: false,
-          throttleDelay: 99,
-          debounceDelay: 50,
-          startEvent: 'DOMContentLoaded',
-          initClassName: 'aos-init',
-          animatedClassName: 'aos-animate',
-          useClassNames: false,
-          disableMutationObserver: false,
-        });
-        this.aosInitialized = true;
-      }).catch(err => {
-        console.warn('AOS failed to load:', err);
-      });
-    }
-  }
-
-  private refreshAOS(): void {
-    if (isPlatformBrowser(this.platformId) && this.aosInitialized) {
-      import('aos').then(aos => {
-        aos.default.refresh();
-      });
-    }
-  }
-
-  private destroyAOS(): void {
-    if (isPlatformBrowser(this.platformId) && this.aosInitialized) {
-      import('aos').then(aos => {
-        aos.default.refreshHard();
-      });
     }
   }
 
@@ -170,7 +116,8 @@ export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestr
     } else {
       this.currentIndex++;
     }
-    this.refreshAOS();
+    // Automatically refresh AOS when data changes
+    this.refreshAosOnDataChange();
   }
 
   prevSlide(): void {
@@ -179,15 +126,13 @@ export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestr
     } else {
       this.currentIndex--;
     }
-    this.refreshAOS();
+    this.refreshAosOnDataChange();
   }
 
   goToSlide(dotIndex: number): void {
     this.currentIndex = dotIndex * this.itemsPerView;
-    this.refreshAOS();
+    this.refreshAosOnDataChange();
   }
-
-  imageErrors: { [key: number]: boolean } = {};
 
   onImageError(projectIndex: number): void {
     this.imageErrors[projectIndex] = true;
@@ -198,9 +143,7 @@ export class ProjectsCarouselComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   getCurrentProjectIndex(visibleIndex: number): number {
-    const actualIndex =
-      (this.currentIndex + visibleIndex) % this.projects.length;
-    return actualIndex;
+    return (this.currentIndex + visibleIndex) % this.projects.length;
   }
 
   getAnimationDelay(index: number): string {

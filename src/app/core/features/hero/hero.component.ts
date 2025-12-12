@@ -1,15 +1,14 @@
-import { 
-  Component, 
-  ElementRef, 
-  HostListener, 
-  ViewChild, 
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  ViewChild,
   Inject,
   PLATFORM_ID,
-  AfterViewInit,
-  OnDestroy 
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import * as AOS from 'aos';
+
+import { AosBaseComponent } from '../../base/aos.base.component';
+import { AosService } from '../../../services/aos.service';
 
 interface HeroSlide {
   title: string;
@@ -29,20 +28,23 @@ interface StatData {
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
 })
-export class HeroComponent implements AfterViewInit, OnDestroy {
+export class HeroComponent extends AosBaseComponent {
   @ViewChild('heroSection', { static: true }) heroSection!: ElementRef;
 
   heroSlides: HeroSlide[] = [
     {
       title: 'BUILD YOUR DREAM HOME',
-      subtitle: 'Expert Engineers, Quality Construction, and Innovative Design Solutions',
+      subtitle:
+        'Expert Engineers, Quality Construction, and Innovative Design Solutions',
       image: 'home.webp',
       accent: 'WITH US',
     },
     {
       title: 'TURNING VISIONS INTO REALITY',
-      subtitle: 'Complete Planning, Contracting, and Supervision Services in Kallumpuram',
-      image: 'https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBleHRlcmlvciUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3NjQ5NjA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      subtitle:
+        'Complete Planning, Contracting, and Supervision Services in Kallumpuram',
+      image:
+        'https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBleHRlcmlvciUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3NjQ5NjA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
       accent: 'REALITY',
     },
     {
@@ -71,51 +73,22 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   private progressAnimationFrame: any;
   private statsAnimationFrame: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) platformId: Object, aosService: AosService) {
+    super(platformId, aosService);
+  }
 
-  ngOnInit(): void {
-    // Initialize AOS if in browser environment
-    if (isPlatformBrowser(this.platformId)) {
-      AOS.init({
-        duration: 1000,
-        easing: 'ease-out-cubic',
-        once: false,
-        mirror: true,
-        offset: 100,
-        delay: 0,
-      });
-      
-      // Refresh AOS on window resize
-      window.addEventListener('load', () => {
-        AOS.refresh();
-      });
+  protected override onAosReady(): void {
+    super.onAosReady();
+    if (this.isBrowser) {
+      this.startAutoSlide();
+      this.startCounterAnimation();
+      this.startProgressAnimation();
     }
   }
 
-  ngAfterViewInit(): void {
-   
-    if (isPlatformBrowser(this.platformId)) {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          this.startAutoSlide();
-          this.startCounterAnimation();
-          this.startProgressAnimation();
-        
-          setTimeout(() => {
-            AOS.refresh();
-          }, 500);
-        }, 200);
-      });
-    }
-  }
-
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.clearTimers();
-    
-    // Clean up AOS if in browser environment
-    if (isPlatformBrowser(this.platformId)) {
-      window.removeEventListener('load', () => AOS.refresh());
-    }
+    super.ngOnDestroy();
   }
 
   private clearTimers(): void {
@@ -132,7 +105,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
-    if (this.heroSection?.nativeElement && isPlatformBrowser(this.platformId)) {
+    if (this.heroSection?.nativeElement && this.isBrowser) {
       const rect = this.heroSection.nativeElement.getBoundingClientRect();
       this.mousePosition = {
         x: (event.clientX - rect.left) / rect.width - 0.5,
@@ -141,15 +114,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('window:resize', [])
-  onResize(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      AOS.refresh();
-    }
-  }
-
   private startAutoSlide(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.isBrowser) return;
 
     if (this.autoSlideTimer) {
       clearInterval(this.autoSlideTimer);
@@ -159,9 +125,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       this.nextSlide();
     }, 5000);
   }
-
   private startProgressAnimation(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.isBrowser) return;
 
     if (this.progressAnimationFrame) {
       cancelAnimationFrame(this.progressAnimationFrame);
@@ -186,7 +151,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   private startCounterAnimation(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.isBrowser) return;
 
     if (this.statsAnimationFrame) {
       cancelAnimationFrame(this.statsAnimationFrame);
@@ -239,7 +204,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   scrollToSection(id: string): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isBrowser) {
       const element = document.getElementById(id);
       if (element) {
         const offset = 80;

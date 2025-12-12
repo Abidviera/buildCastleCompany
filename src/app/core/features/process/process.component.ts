@@ -1,13 +1,6 @@
-import { 
-  Component, 
-  OnInit, 
-  Inject, 
-  PLATFORM_ID,
-  HostListener,
-  OnDestroy
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import type AOS from 'aos';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { AosBaseComponent } from '../../base/aos.base.component';
+import { AosService } from '../../../services/aos.service';
 
 interface ProcessStep {
   icon: string;
@@ -21,9 +14,7 @@ interface ProcessStep {
   templateUrl: './process.component.html',
   styleUrl: './process.component.scss',
 })
-export class ProcessComponent {
-  private aosInitialized = false;
-  
+export class ProcessComponent extends AosBaseComponent {
   steps: ProcessStep[] = [
     {
       icon: 'lightbulb',
@@ -55,41 +46,8 @@ export class ProcessComponent {
     },
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.initAOS();
-    }
-  }
-
-  private async initAOS(): Promise<void> {
-    try {
-      const aos = await import('aos');
-      if (aos && !this.aosInitialized) {
-        aos.default.init({
-          duration: 800, // Slightly longer for smoothness
-          easing: 'ease-out-cubic',
-          once: true, // Animation happens only once
-          offset: 100, // Trigger animation earlier
-          delay: 150, // Small delay for staggered effect
-          disable: this.isMobile(), // Disable on mobile if needed
-          anchorPlacement: 'top-bottom',
-          mirror: false,
-          throttleDelay: 99,
-          debounceDelay: 50,
-          startEvent: 'DOMContentLoaded'
-        });
-        this.aosInitialized = true;
-      }
-    } catch (error) {
-      console.warn('AOS failed to load:', error);
-    }
-  }
-
-  private isMobile(): boolean {
-    return isPlatformBrowser(this.platformId) && 
-           window.innerWidth <= 768;
+  constructor(@Inject(PLATFORM_ID) platformId: Object, aosService: AosService) {
+    super(platformId, aosService);
   }
 
   getBootstrapIcon(iconName: string): string {
@@ -100,23 +58,5 @@ export class ProcessComponent {
       'check-circle': 'bi bi-check-circle',
     };
     return iconMap[iconName] || 'bi bi-circle';
-  }
-
-  // Optional: Refresh AOS on window resize for responsive behavior
-  @HostListener('window:resize')
-  onResize(): void {
-    if (isPlatformBrowser(this.platformId) && this.aosInitialized) {
-      import('aos').then(aos => {
-        aos.default.refresh();
-      });
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId) && this.aosInitialized) {
-      import('aos').then(aos => {
-        aos.default.refreshHard(); // Clean up AOS
-      });
-    }
   }
 }
