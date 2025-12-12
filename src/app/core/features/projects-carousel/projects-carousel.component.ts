@@ -116,7 +116,7 @@ export class ProjectsCarouselComponent extends AosBaseComponent {
     } else {
       this.currentIndex++;
     }
-    // Automatically refresh AOS when data changes
+   
     this.refreshAosOnDataChange();
   }
 

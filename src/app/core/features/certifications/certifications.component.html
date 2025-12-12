@@ -1,35 +1,37 @@
 <section class="certifications-section">
   <div class="certifications-container">
-    <!-- Certifications -->
     <div class="certifications-content mb-24">
       <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
-        <h2 class="mb-6">
-          CERTIFIED &<br />QUALIFIED TEAM
-        </h2>
+        <h2 class="mb-6">CERTIFIED &<br />QUALIFIED TEAM</h2>
         <p class="section-description">
-          Trust comes from credentials. Our team holds all necessary certifications 
-          and licenses to ensure your project is in safe, qualified hands.
+          Trust comes from credentials. Our team holds all necessary
+          certifications and licenses to ensure your project is in safe,
+          qualified hands.
         </p>
       </div>
 
       <div class="certifications-grid">
-        <div 
+        <div
           *ngFor="let cert of certifications; let i = index"
           class="certification-card"
           [attr.data-index]="i"
           data-aos="fade-up"
-          [attr.data-aos-delay]="100 + (i * 100)"
+          [attr.data-aos-delay]="100 + i * 100"
           data-aos-easing="ease-out-cubic"
         >
           <div class="icon-container">
-            <svg 
+            <svg
               class="cert-icon"
               viewBox="0 0 24 24"
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               stroke-width="1"
             >
-              <path [attr.d]="getIconPath(cert.icon)" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                [attr.d]="getIconPath(cert.icon)"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <h4 class="cert-title">{{ cert.title }}</h4>
@@ -40,35 +42,39 @@
       </div>
     </div>
 
-    <!-- Achievements -->
     <div class="achievements-section">
       <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
         <h2 class="achievements-title mb-6">
           OUR ACHIEVEMENTS<br />& MILESTONES
         </h2>
         <p class="achievements-description">
-          Numbers that speak for our commitment to excellence and customer satisfaction
+          Numbers that speak for our commitment to excellence and customer
+          satisfaction
         </p>
       </div>
 
       <div class="achievements-grid">
-        <div 
+        <div
           *ngFor="let achievement of achievements; let i = index"
           class="achievement-card"
           [attr.data-index]="i"
           data-aos="fade-up"
-          [attr.data-aos-delay]="100 + (i * 100)"
+          [attr.data-aos-delay]="100 + i * 100"
           data-aos-easing="ease-out-cubic"
         >
           <div class="achievement-icon-container">
-            <svg 
+            <svg
               class="achievement-icon"
               viewBox="0 0 24 24"
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               stroke-width="1"
             >
-              <path [attr.d]="getIconPath(achievement.icon)" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                [attr.d]="getIconPath(achievement.icon)"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <div class="achievement-stat">{{ achievement.stat }}</div>

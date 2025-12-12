@@ -4,23 +4,14 @@
       <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
         INSTANT COST<br />CALCULATOR
       </h2>
-      <p 
-        class="section-description" 
-        data-aos="fade-up" 
-        data-aos-delay="200"
-      >
+      <p class="section-description" data-aos="fade-up" data-aos-delay="200">
         Get a quick estimate for your construction project. This is an
         approximate calculation - contact us for a detailed, accurate quote.
       </p>
     </div>
 
     <div class="calculator-grid">
-      <!-- Calculator Form -->
-      <div 
-        class="calculator-form" 
-        data-aos="fade-right" 
-        data-aos-delay="300"
-      >
+      <div class="calculator-form" data-aos="fade-right" data-aos-delay="300">
         <div class="form-header">
           <div class="icon-wrapper" [innerHTML]="calculatorIcon"></div>
           <h3>Calculate Your Project Cost</h3>
@@ -31,11 +22,7 @@
           class="cost-form"
           #costForm="ngForm"
         >
-          <div 
-            class="form-group" 
-            data-aos="fade-up" 
-            data-aos-delay="400"
-          >
+          <div class="form-group" data-aos="fade-up" data-aos-delay="400">
             <label class="form-label"> Project Type * </label>
             <select
               name="projectType"
@@ -51,11 +38,7 @@
             </select>
           </div>
 
-          <div 
-            class="form-group" 
-            data-aos="fade-up" 
-            data-aos-delay="450"
-          >
+          <div class="form-group" data-aos="fade-up" data-aos-delay="450">
             <label class="form-label"> Area (Square Feet) * </label>
             <input
               type="number"
@@ -69,11 +52,7 @@
             />
           </div>
 
-          <div 
-            class="form-group" 
-            data-aos="fade-up" 
-            data-aos-delay="500"
-          >
+          <div class="form-group" data-aos="fade-up" data-aos-delay="500">
             <label class="form-label"> Quality Level * </label>
             <select
               name="quality"
@@ -89,11 +68,7 @@
             </select>
           </div>
 
-          <div 
-            class="form-group" 
-            data-aos="fade-up" 
-            data-aos-delay="550"
-          >
+          <div class="form-group" data-aos="fade-up" data-aos-delay="550">
             <label class="form-label"> Number of Floors </label>
             <select
               name="floors"
@@ -121,28 +96,23 @@
         </form>
       </div>
 
-      <!-- Results -->
-      <div 
-        class="results-section" 
-        data-aos="fade-down" 
-        data-aos-delay="300"
-      >
-        <div 
-          *ngIf="showResult && estimate" 
+      <div class="results-section" data-aos="fade-down" data-aos-delay="300">
+        <div
+          *ngIf="showResult && estimate"
           class="results-content"
           data-aos="fade-up"
           data-aos-duration="500"
         >
-          <div 
-            class="estimate-card" 
-            data-aos="zoom-in" 
-            data-aos-delay="100"
-          >
+          <div class="estimate-card" data-aos="zoom-in" data-aos-delay="100">
             <div class="estimate-header">
               <div class="icon-wrapper" [innerHTML]="dollarIcon"></div>
               <h3 class="estimate-title">Estimated Cost</h3>
             </div>
-            <div class="estimate-amount" data-aos="zoom-in" data-aos-delay="200">
+            <div
+              class="estimate-amount"
+              data-aos="zoom-in"
+              data-aos-delay="200"
+            >
               {{ formatCurrency(estimate) }}
             </div>
             <p class="estimate-disclaimer">
@@ -151,18 +121,14 @@
             </p>
           </div>
 
-          <div 
-            class="included-list" 
-            data-aos="fade-up" 
-            data-aos-delay="300"
-          >
+          <div class="included-list" data-aos="fade-up" data-aos-delay="300">
             <h4 class="list-title">What's Included</h4>
             <div class="list-items">
-              <div 
-                class="list-item" 
+              <div
+                class="list-item"
                 *ngFor="let item of includedItems; let i = index"
                 [attr.data-aos]="'fade-right'"
-                [attr.data-aos-delay]="300 + (i * 50)"
+                [attr.data-aos-delay]="300 + i * 50"
               >
                 <div class="list-bullet"></div>
                 <span>{{ item }}</span>
@@ -170,17 +136,13 @@
             </div>
           </div>
 
-          <div 
-            class="cta-section" 
-            data-aos="fade-up" 
-            data-aos-delay="600"
-          >
+          <div class="cta-section" data-aos="fade-up" data-aos-delay="600">
             <h4 class="cta-title">Want a Detailed Quote?</h4>
             <p class="cta-description">
               Get a comprehensive, itemized estimate with no hidden costs
             </p>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               class="cta-button"
               data-aos="zoom-in"
               data-aos-delay="700"
@@ -190,14 +152,14 @@
           </div>
         </div>
 
-        <div 
-          *ngIf="!showResult || !estimate" 
+        <div
+          *ngIf="!showResult || !estimate"
           class="placeholder-section"
           data-aos="fade-in"
           data-aos-delay="400"
         >
           <div class="placeholder-content">
-            <div 
+            <div
               class="placeholder-icon"
               data-aos="zoom-in"
               data-aos-delay="500"
@@ -213,14 +175,14 @@
               </svg>
             </div>
 
-            <h4 
+            <h4
               class="placeholder-title"
               data-aos="fade-up"
               data-aos-delay="600"
             >
               Enter Your Project Details
             </h4>
-            <p 
+            <p
               class="placeholder-description"
               data-aos="fade-up"
               data-aos-delay="700"

@@ -10,8 +10,7 @@
     <div class="header-logo" data-aos="fade-right" data-aos-delay="100">
      <img src="buildcastle.png" alt="">
     </div>
-    
-    <!-- Desktop Navigation -->
+
     <nav class="desktop-nav" data-aos="fade-left" data-aos-delay="200">
       <button 
         (click)="scrollToSection('home')" 
@@ -60,7 +59,7 @@
       </button>
     </nav>
 
-    <!-- Mobile Menu Button -->
+   
     <button 
       class="mobile-menu-button"
       (click)="toggleMobileMenu()"
@@ -72,7 +71,7 @@
     </button>
   </div>
 
-  <!-- Mobile Navigation -->
+
   <div 
     *ngIf="isMobileMenuOpen" 
     class="mobile-nav"

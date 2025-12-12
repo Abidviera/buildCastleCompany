@@ -1,11 +1,11 @@
-// Hero Section Styles
+
 .hero-section {
   position: relative;
   margin-top: 80px;
   overflow: hidden;
 }
 
-// Floating Geometric Shapes
+
 .floating-shapes {
   position: absolute;
   inset: 0;
@@ -57,7 +57,7 @@
   }
 }
 
-// Hero Container
+
 .hero-container {
   position: relative;
   min-height: 100vh;
@@ -65,7 +65,7 @@
   align-items: center;
 }
 
-// Background Images
+
 .background-images {
   position: absolute;
   inset: 0;
@@ -108,7 +108,7 @@
   );
 }
 
-// Content Wrapper
+
 .content-wrapper {
   position: relative;
   z-index: 10;
@@ -129,14 +129,14 @@
   }
 }
 
-// Text Content
+
 .text-content {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
-// Slide Counter
+
 .slide-counter {
   display: flex;
   align-items: center;
@@ -172,7 +172,7 @@
   font-size: 14px;
 }
 
-// Title Container
+
 .title-container {
   display: flex;
   flex-direction: column;
@@ -228,7 +228,6 @@
   animation: fadeIn 0.8s ease-out 0.4s both;
 }
 
-// Button Group
 .button-group {
   display: flex;
   flex-wrap: wrap;
@@ -308,7 +307,7 @@
   }
 }
 
-// Slide Navigation
+
 .slide-navigation {
   display: flex;
   justify-content: flex-end;
@@ -404,7 +403,7 @@
   }
 }
 
-// Scroll Indicator
+
 .scroll-indicator {
   position: absolute;
   bottom: 48px;
@@ -442,7 +441,7 @@
   }
 }
 
-// Stats Bar
+
 .stats-bar {
   position: relative;
   background-color: white;
@@ -507,7 +506,7 @@
   text-transform: uppercase;
 }
 
-// Animations
+
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -539,7 +538,7 @@
   }
 }
 
-// Responsive adjustments
+
 @media (max-width: 1023px) {
   .content-grid {
     grid-template-columns: 1fr;

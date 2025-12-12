@@ -79,7 +79,7 @@
   height: 24px;
 }
 
-// Desktop Carousel
+
 .desktop-carousel {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -90,7 +90,7 @@
   }
 }
 
-// Mobile Grid
+
 .mobile-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -101,7 +101,7 @@
   }
 }
 
-// Project Card
+
 .project-card {
   overflow: hidden;
   cursor: pointer;
@@ -174,7 +174,7 @@
   margin: 0;
 }
 
-// Progress Dots
+
 .progress-dots {
   display: flex;
   justify-content: center;
@@ -203,7 +203,7 @@
   }
 }
 
-// Animations
+
 @keyframes slideIn {
   from {
     opacity: 0;

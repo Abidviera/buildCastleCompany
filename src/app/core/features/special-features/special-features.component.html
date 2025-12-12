@@ -1,85 +1,76 @@
-<!-- Main Features Grid -->
 <section class="main-features">
   <div class="container">
-    <div class="features-header" 
-         data-aos="fade-up"
-         data-aos-delay="100">
-      <h2>WHAT MAKES US<br>DIFFERENT</h2>
+    <div class="features-header" data-aos="fade-up" data-aos-delay="100">
+      <h2>WHAT MAKES US<br />DIFFERENT</h2>
       <p>
-        Beyond just construction - we bring innovation, transparency, and 
+        Beyond just construction - we bring innovation, transparency, and
         technology to make your building experience exceptional
       </p>
     </div>
 
     <div class="features-grid">
-      <div *ngFor="let feature of features; let i = index" 
-           class="feature-card"
-           data-aos="fade-up"
-           [attr.data-aos-delay]="(i % 4) * 100"
-           (mouseenter)="onMouseEnter($event)"
-           (mouseleave)="onMouseLeave($event)">
+      <div
+        *ngFor="let feature of features; let i = index"
+        class="feature-card"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="(i % 4) * 100"
+        (mouseenter)="onMouseEnter($event)"
+        (mouseleave)="onMouseLeave($event)"
+      >
         <div class="feature-icon" [ngClass]="feature.iconClass"></div>
-        <h4>{{feature.title}}</h4>
-        <p>{{feature.description}}</p>
+        <h4>{{ feature.title }}</h4>
+        <p>{{ feature.description }}</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Unique Services Showcase -->
 <section class="unique-services">
   <div class="container">
-    <div class="services-header"
-         data-aos="fade-up"
-         data-aos-delay="100">
-      <h2>THE BUILD CASTLE<br>ADVANTAGE</h2>
+    <div class="services-header" data-aos="fade-up" data-aos-delay="100">
+      <h2>THE BUILD CASTLE<br />ADVANTAGE</h2>
     </div>
 
     <div class="services-grid">
-      <div *ngFor="let service of uniqueServices; let i = index" 
-           class="service-card"
-           data-aos="fade-up"
-           [attr.data-aos-delay]="i * 150"
-           (mouseenter)="onServiceHover($event)"
-           (mouseleave)="onServiceLeave($event)">
+      <div
+        *ngFor="let service of uniqueServices; let i = index"
+        class="service-card"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="i * 150"
+        (mouseenter)="onServiceHover($event)"
+        (mouseleave)="onServiceLeave($event)"
+      >
         <div class="service-image-container">
-          <img [src]="service.image" 
-               [alt]="service.title"
-               (error)="onImageError($event, service)"
-               class="service-image">
+          <img
+            [src]="service.image"
+            [alt]="service.title"
+            (error)="onImageError($event, service)"
+            class="service-image"
+          />
         </div>
-        <h3>{{service.title}}</h3>
-        <p>{{service.description}}</p>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Trust Factors -->
 <section class="trust-factors">
   <div class="container">
     <div class="trust-grid">
-      <div class="trust-item"
-           data-aos="zoom-in"
-           data-aos-delay="100">
+      <div class="trust-item" data-aos="zoom-in" data-aos-delay="100">
         <div class="trust-number">100%</div>
         <p class="trust-label">Approval Success Rate</p>
       </div>
-      <div class="trust-item"
-           data-aos="zoom-in"
-           data-aos-delay="200">
+      <div class="trust-item" data-aos="zoom-in" data-aos-delay="200">
         <div class="trust-number">Zero</div>
         <p class="trust-label">Hidden Charges</p>
       </div>
-      <div class="trust-item"
-           data-aos="zoom-in"
-           data-aos-delay="300">
+      <div class="trust-item" data-aos="zoom-in" data-aos-delay="300">
         <div class="trust-number">24/7</div>
         <p class="trust-label">Customer Support</p>
       </div>
-      <div class="trust-item"
-           data-aos="zoom-in"
-           data-aos-delay="400">
+      <div class="trust-item" data-aos="zoom-in" data-aos-delay="400">
         <div class="trust-number">1 Year</div>
         <p class="trust-label">Warranty Coverage</p>
       </div>

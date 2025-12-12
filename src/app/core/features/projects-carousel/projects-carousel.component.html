@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <!-- Desktop Carousel -->
+   
     <div class="desktop-carousel" *ngIf="!isMobile">
       <div
         *ngFor="let project of visibleProjects; let i = index"
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <!-- Mobile Grid -->
+  
     <div class="mobile-grid" *ngIf="isMobile">
       <div
         *ngFor="let project of projects; let i = index"
@@ -148,7 +148,7 @@
       </div>
     </div>
 
-    <!-- Progress Dots -->
+   
     <div class="progress-dots" data-aos="fade-up" data-aos-delay="500">
       <button
         *ngFor="let dot of totalDots; let i = index"

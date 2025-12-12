@@ -336,7 +336,7 @@
   }
 }
 
-// Form validation styles
+
 .form-input.ng-invalid.ng-touched,
 .form-select.ng-invalid.ng-touched {
   border-color: #dc2626;
@@ -347,7 +347,7 @@
   border-color: #dc2626;
 }
 
-// Animation for results
+
 .results-content {
   animation: fadeIn 0.5s ease-out;
 }
@@ -363,7 +363,7 @@
   }
 }
 
-// Responsive adjustments
+
 @media (max-width: 768px) {
   .calculator-form,
   .estimate-card,

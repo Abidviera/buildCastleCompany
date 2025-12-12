@@ -1,4 +1,3 @@
-/* Header Styles */
 .header {
   position: fixed;
   top: 0;
@@ -39,7 +38,6 @@
   vertical-align: super;
 }
 
-/* Desktop Navigation Styles */
 .desktop-nav {
   display: none;
   gap: 40px;
@@ -49,8 +47,6 @@
   .desktop-nav {
     display: flex;
   }
-
-
 }
 
 .nav-link {
@@ -68,7 +64,6 @@
   opacity: 0.6;
 }
 
-/* Mobile Menu Button */
 .mobile-menu-button {
   display: block;
   background: none;
@@ -92,7 +87,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Mobile Navigation Styles */
 .mobile-nav {
   display: block;
   background-color: #ffffff;
@@ -129,8 +123,6 @@
 }
 
 @media (max-width: 768px) {
- 
-
   .header-logo {
     img {
       width: 40% !important;

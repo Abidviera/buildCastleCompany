@@ -33,7 +33,7 @@
   }
 }
 
-// Section Header
+
 .section-header {
   text-align: center;
   margin-bottom: 64px;
@@ -81,7 +81,7 @@
   line-height: 1.8;
 }
 
-// Tab Navigation
+
 .tab-navigation {
   display: flex;
   justify-content: center;
@@ -116,7 +116,7 @@
   }
 }
 
-// Team Grid
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -220,7 +220,7 @@
   .member-role {
     font-size: 12px;
     letter-spacing: 1px;
-    color: #d4a574; // Gold accent color
+    color: #d4a574;
     text-transform: uppercase;
     margin-bottom: 12px;
     font-weight: 500;
@@ -253,7 +253,7 @@
     font-weight: 500;
   }
 }
-// Expertise Grid
+
 .expertise-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -294,7 +294,7 @@
 
 .expertise-icon {
   flex-shrink: 0;
-//   align-items: center;
+
 
   .icon-container {
     width: 64px;
@@ -309,8 +309,8 @@
 
     ::ng-deep i {
       stroke-width: 1.5;
-      stroke: var(--color-white) !important; // Force white stroke
-      color: var(--color-white) !important; // Force white color
+      stroke: var(--color-white) !important; 
+      color: var(--color-white) !important; 
     }
   }
 }
@@ -328,7 +328,7 @@
   }
 }
 
-// Achievements Bar
+
 .achievements-bar {
   background-color: var(--color-primary);
   color: var(--color-white);
@@ -416,7 +416,6 @@
   text-transform: uppercase;
 }
 
-// Call to Action
 .cta-section {
   text-align: center;
   margin-top: 80px;
@@ -470,7 +469,7 @@
   }
 }
 
-// Animations
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -482,7 +481,7 @@
   }
 }
 
-// Apply animations to elements
+
 .team-grid,
 .expertise-grid,
 .achievement-item {
