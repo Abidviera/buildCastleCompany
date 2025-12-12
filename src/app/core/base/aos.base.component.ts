@@ -1,10 +1,4 @@
-import {
-  Directive,
-  OnDestroy,
-  Inject,
-  PLATFORM_ID,
-  AfterViewInit,
-} from '@angular/core';
+import { Directive, OnDestroy, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AosService } from '../../services/aos.service';
 import { Subscription } from 'rxjs';
@@ -23,16 +17,17 @@ export abstract class AosBaseComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-    this.aosSubscription = this.aosService.initialized$.subscribe(
-      (initialized) => {
-        if (initialized) {
-          setTimeout(() => this.onAosReady(), 50);
-        }
+
+    // Wait for AOS to be ready
+    this.aosSubscription = this.aosService.initialized$.subscribe(initialized => {
+      if (initialized) {
+        setTimeout(() => this.onAosReady(), 50);
       }
-    );
+    });
   }
 
   protected onAosReady(): void {
+    // Override in child if needed
     this.aosService.refreshAfterDelay(100);
   }
 
@@ -46,5 +41,14 @@ export abstract class AosBaseComponent implements AfterViewInit, OnDestroy {
     this.aosSubscription?.unsubscribe();
   }
 
-  ngOnInit(): void {}
+   ngOnInit(): void {
+    // if (this.isBrowser) {
+    //   this.aosSubscription = this.aosService.initialized$.subscribe(initialized => {
+    //     if (initialized) {
+    //       this.onAosReady();
+    //     }
+    //   });
+    // }
+  }
+
 }
